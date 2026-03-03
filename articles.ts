@@ -1,3 +1,5 @@
+import { assetUrl } from './lib/assets';
+
 export interface ArticleSection {
   heading?: string;
   paragraphs: string[];
@@ -19,7 +21,7 @@ export const ARTICLES: Record<string, Article> = {
     title: '会議室がレストランに — JET CHEF 紐を引くだけ、どこでも温かいお弁当',
     date: '2025.08.16',
     category: 'JetChef',
-    coverImage: '/images/blog/delivery-cover.jpg',
+    coverImage: assetUrl('/images/blog/delivery-cover.jpg'),
     sections: [
       {
         heading: 'お店の出来立てを、自宅で味わうという贅沢',
@@ -28,7 +30,7 @@ export const ARTICLES: Record<string, Article> = {
           '電子レンジ不要で、紐を引くだけで約10分後には80〜85℃の高温に達し、あたためムラなく最後まで温かさが保たれます。',
           '宅配うなぎは"温かさが命"。JETCHEFはこれまでの配達距離の制限を覆し、どこでも本格的な味を届けることが可能になりました。',
         ],
-        image: '/images/blog/delivery-unagi.jpg',
+        image: assetUrl('/images/blog/delivery-unagi.jpg'),
       },
       {
         heading: '宅配うなぎの常識を覆すJETCHEFの仕組み',
@@ -46,7 +48,7 @@ export const ARTICLES: Record<string, Article> = {
           'お届けするうなぎはすべて店舗の職人が一枚一枚丁寧に焼き上げたもの。直火でパチパチと音を立てながら焼かれ、皮はパリッと香ばしく、身はふっくら柔らか。秘伝のタレが絡んだ艶やかな照りと香りが特徴です。',
           'JetChefの加熱容器を使うことで、焼きたての風味や食感をそのまま自宅で再現できるようになりました。Uber Eatsでは5,000件以上のレビューで平均★4.6以上の高評価を獲得。発売以来、累計120万食以上を販売してきた大人気のうな重弁当です。',
         ],
-        image: '/images/blog/delivery-shop.jpg',
+        image: assetUrl('/images/blog/delivery-shop.jpg'),
       },
       {
         heading: '配達エリア戦略と金のうなぎ',
@@ -97,7 +99,7 @@ export const ARTICLES: Record<string, Article> = {
     title: 'JETCHEFとは？ 電子レンジ不要で温まるお弁当容器に込められた想いと技術',
     date: '2025.07.18',
     category: 'JetChef',
-    coverImage: '/images/blog/about-cover.jpg',
+    coverImage: assetUrl('/images/blog/about-cover.jpg'),
     sections: [
       {
         heading: 'JetChef（ジェットシェフ）って何？',
@@ -120,7 +122,7 @@ export const ARTICLES: Record<string, Article> = {
           'しかしJETCHEFは、容器全体を均一に加熱するため、あたためムラもなく、最後の一口まで美味しさを保ちます。さらに20分以上の保温が可能で、配膳や食事のタイミングが前後しても安心です。',
           '開発過程では、数多くの素材配合を試作し、温度上昇スピードや蒸気量、加熱の均一性を徹底的に検証。その結果、外気温や利用環境に左右されず、どこでも"出来立て感"を再現できる構造が完成しました。',
         ],
-        image: '/images/blog/about-product.jpg',
+        image: assetUrl('/images/blog/about-product.jpg'),
         quote: 'この加熱構造は、特許番号 第7657413号として正式に登録されています。JETCHEF®は有限会社築地にっしん太助の登録商標（商標登録番号 第6786212号）です。',
       },
       {
@@ -149,7 +151,7 @@ export const ARTICLES: Record<string, Article> = {
           '「まるでお店で食べているような美味しさ！」とお客様から好評',
           '「電子レンジなしでホカホカになるので、大量注文でも準備が簡単！」との声',
         ],
-        image: '/images/blog/about-shop.jpg',
+        image: assetUrl('/images/blog/about-shop.jpg'),
       },
       {
         heading: '高級感のあるお弁当',

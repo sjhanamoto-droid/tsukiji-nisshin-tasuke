@@ -1,3 +1,5 @@
+import { assetUrl } from './lib/assets';
+
 export interface NewsArticle {
   id: string;
   date: string;
@@ -19,7 +21,7 @@ export const NEWS_ARTICLES: Record<string, NewsArticle> = {
       '本年も多くのお客様にご来店いただき、心より感謝申し上げます。来年もより一層心を込めたお料理とサービスをお届けできるよう、スタッフ一同精進してまいります。',
       '寒さが厳しい折、どうぞお身体にお気をつけて、よいお年をお迎えください。',
     ],
-    images: ['/images/news/nenmatsu.jpeg'],
+    images: [assetUrl('/images/news/nenmatsu.jpeg')],
   },
   'singapore-hanabi-2025': {
     id: 'singapore-hanabi-2025',
@@ -32,10 +34,10 @@ export const NEWS_ARTICLES: Record<string, NewsArticle> = {
       'お近くにお越しの際は、ぜひお立ち寄りください。',
     ],
     images: [
-      '/images/news/singapore1.jpg',
-      '/images/news/singapore2.jpg',
-      '/images/news/singapore3.jpg',
-      '/images/news/singapore4.jpg',
+      assetUrl('/images/news/singapore1.jpg'),
+      assetUrl('/images/news/singapore2.jpg'),
+      assetUrl('/images/news/singapore3.jpg'),
+      assetUrl('/images/news/singapore4.jpg'),
     ],
   },
   'jetchef-patent-2025': {
@@ -49,8 +51,8 @@ export const NEWS_ARTICLES: Record<string, NewsArticle> = {
       '築地うなぎ食堂 | 有限会社にっしん太助を今後ともよろしくお願いいたします。',
     ],
     images: [
-      '/images/news/patent.png',
-      '/images/news/jetchef-logo.png',
+      assetUrl('/images/news/patent.png'),
+      assetUrl('/images/news/jetchef-logo.png'),
     ],
   },
   'yochan-bento-trademark': {
@@ -63,6 +65,6 @@ export const NEWS_ARTICLES: Record<string, NewsArticle> = {
       '当店のオリジナルキャラクター「YO-chan」を冠したお弁当ブランドとして、商標登録が完了いたしました。',
       '今後ともYO CHAN BENTOをよろしくお願いいたします。',
     ],
-    images: ['/images/news/trademark.png'],
+    images: [assetUrl('/images/news/trademark.png')],
   },
 };

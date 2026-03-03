@@ -1,6 +1,7 @@
 import React, { useEffect } from 'react';
 import { ArrowLeft, Bike, MapPin, Gift, ExternalLink, ArrowRight } from 'lucide-react';
 import { motion } from 'framer-motion';
+import { assetUrl } from '../lib/assets';
 
 interface ConsumerPageProps {
   onBack: () => void;
@@ -14,7 +15,7 @@ const CHOICES = [
     desc: '即時配達対応の宅配メニュー。JetChefの特許加熱容器で、ご自宅に届いてから温める出来立ての美味しさ。',
     detail: '築地の職人が焼き上げた鰻を、温かいままご自宅へ。',
     icon: Bike,
-    image: '/images/kinunagi/unagi-king.jpg',
+    image: assetUrl('/images/kinunagi/unagi-king.jpg'),
     href: 'https://nisshintasuke.take-eats.jp/',
     external: true,
     cta: '宅配メニューを見る',
@@ -26,7 +27,7 @@ const CHOICES = [
     desc: '築地場外市場の活気を感じながら、焼きたての鰻を。職人の技を目の前で堪能できる、特別な食体験。',
     detail: '築地うなぎ食堂・金のうなぎ各店舗でお待ちしております。',
     icon: MapPin,
-    image: '/images/kinunagi/main.jpg',
+    image: assetUrl('/images/kinunagi/main.jpg'),
     href: '#locations',
     external: false,
     cta: '店舗案内を見る',
@@ -38,7 +39,7 @@ const CHOICES = [
     desc: '全国どこへでもお届け。大切な方への贈り物や、ご自宅でのお取り寄せに。',
     detail: 'ギフト包装・熨斗対応。特別な日の贈り物にも。',
     icon: Gift,
-    image: '/images/kinunagi/hitumabusi.jpg',
+    image: assetUrl('/images/kinunagi/hitumabusi.jpg'),
     href: 'https://nisshintasuke-tsuhan.take-eats.jp/',
     external: true,
     cta: '通信販売サイトへ',
@@ -88,7 +89,7 @@ export const ConsumerPage: React.FC<ConsumerPageProps> = ({ onBack }) => {
             </span>
           </button>
           <img
-            src="/images/logo/logo-wh.png"
+            src={assetUrl('/images/logo/logo-wh.png')}
             alt="築地にっしん太助"
             className="h-8 opacity-60"
           />

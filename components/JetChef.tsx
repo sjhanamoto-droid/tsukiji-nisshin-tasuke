@@ -1,6 +1,7 @@
 import React from 'react';
 import { Section } from './Section';
 import { motion } from 'framer-motion';
+import { assetUrl } from '../lib/assets';
 
 const FEATURES = [
   {
@@ -65,7 +66,7 @@ export const JetChef: React.FC = () => {
             transition={{ duration: 0.7, delay: 0.1 }}
           >
             <img
-              src="/images/character/テキストのみ.png"
+              src={assetUrl("/images/character/テキストのみ.png")}
               alt="JetChef"
               className="h-8 md:h-10 lg:h-12 w-auto"
               style={{ filter: 'brightness(0) invert(1)' }}
@@ -109,7 +110,7 @@ export const JetChef: React.FC = () => {
             <div className="relative w-full max-w-2xl mx-auto">
               <video
                 className="w-full h-auto"
-                src="/mov/jetchefanimation-transparent.webm"
+                src={assetUrl("/mov/jetchefanimation-transparent.webm")}
                 autoPlay
                 loop
                 muted

@@ -1,6 +1,7 @@
 import React from 'react';
 import { Section } from './Section';
 import { motion } from 'framer-motion';
+import { assetUrl } from '../lib/assets';
 
 export const Story: React.FC = () => {
   return (
@@ -24,7 +25,7 @@ export const Story: React.FC = () => {
                  }}
                />
                <img
-                src="/images/character/yochan01.png"
+                src={assetUrl('/images/character/yochan01.png')}
                 alt="YO-chan"
                 className="w-3/4 h-auto object-contain relative z-10"
                 style={{ filter: 'drop-shadow(0 12px 24px rgba(0,0,0,0.3))' }}

@@ -2,6 +2,7 @@ import React from 'react';
 import { Section } from './Section';
 import { motion } from 'framer-motion';
 import { Gift, Briefcase } from 'lucide-react';
+import { assetUrl } from '../lib/assets';
 
 export const ForYou: React.FC = () => {
   return (
@@ -25,7 +26,7 @@ export const ForYou: React.FC = () => {
           >
             <div className="absolute inset-0 bg-brand-dark/40 group-hover:bg-brand-dark/30 transition-colors z-10"></div>
             <img 
-              src="/images/image14.jpg" 
+              src={assetUrl('/images/image14.jpg')} 
               alt="Family Dining" 
               className="w-full h-96 object-cover transform group-hover:scale-105 transition-transform duration-700"
             />
@@ -61,7 +62,7 @@ export const ForYou: React.FC = () => {
           >
             <div className="absolute inset-0 bg-brand-dark/40 group-hover:bg-brand-dark/30 transition-colors z-10"></div>
             <img 
-              src="/images/image16.jpg" 
+              src={assetUrl('/images/image16.jpg')} 
               alt="Corporate Event" 
               className="w-full h-96 object-cover transform group-hover:scale-105 transition-transform duration-700"
             />

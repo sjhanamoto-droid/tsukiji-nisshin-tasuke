@@ -1,6 +1,7 @@
 import React, { useEffect } from 'react';
 import { ArrowLeft, MapPin, Phone, Clock, UtensilsCrossed, Navigation2 } from 'lucide-react';
 import { motion } from 'framer-motion';
+import { assetUrl } from '../lib/assets';
 import { SHOP_DETAILS } from '../shopData';
 
 interface ShopPageProps {
@@ -60,7 +61,7 @@ export const ShopPage: React.FC<ShopPageProps> = ({ shopId, onBack }) => {
             </span>
           </button>
           <img
-            src="/images/logo/logo-wh.png"
+            src={assetUrl('/images/logo/logo-wh.png')}
             alt="築地にっしん太助"
             className="h-8 opacity-60"
           />

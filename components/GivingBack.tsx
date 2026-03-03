@@ -2,6 +2,7 @@ import React from 'react';
 import { Section } from './Section';
 import { Heart, Flower2, HandHeart } from 'lucide-react';
 import { motion } from 'framer-motion';
+import { assetUrl } from '../lib/assets';
 
 export const GivingBack: React.FC = () => {
   return (
@@ -125,7 +126,7 @@ export const GivingBack: React.FC = () => {
               }}
             />
             <img
-              src="/images/character/yochan06.png"
+              src={assetUrl("/images/character/yochan06.png")}
               alt="YO-chan — 鰻丼を届ける少年"
               className="relative z-10 w-48 md:w-56 lg:w-64 h-auto drop-shadow-2xl"
             />

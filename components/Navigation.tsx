@@ -2,6 +2,7 @@ import React, { useState, useEffect, useRef } from 'react';
 import { Menu, X, Phone } from 'lucide-react';
 import { NAV_ITEMS } from '../constants';
 import { motion, AnimatePresence } from 'framer-motion';
+import { assetUrl } from '../lib/assets';
 
 export const Navigation: React.FC = () => {
   const [isOpen, setIsOpen] = useState(false);
@@ -73,7 +74,7 @@ export const Navigation: React.FC = () => {
             aria-label="トップページへ"
           >
             <motion.img
-              src="/images/logo/logo-wh.png"
+              src={assetUrl("/images/logo/logo-wh.png")}
               alt="築地にっしん太助"
               className={`transition-all duration-500 ${
                 scrolled ? 'h-10 lg:h-11' : 'h-12 lg:h-14'
@@ -237,7 +238,7 @@ export const Navigation: React.FC = () => {
                 transition={{ delay: 0.15, duration: 0.4 }}
               >
                 <img
-                  src="/images/logo/logo-wh.png"
+                  src={assetUrl("/images/logo/logo-wh.png")}
                   alt="築地にっしん太助"
                   className="h-14"
                   style={{ filter: 'drop-shadow(0 2px 6px rgba(0,0,0,0.4))' }}

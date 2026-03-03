@@ -1,6 +1,7 @@
 import React from 'react';
 import { ArrowDown } from 'lucide-react';
 import { motion } from 'framer-motion';
+import { assetUrl } from '../lib/assets';
 
 export const Hero: React.FC = () => {
   return (
@@ -10,7 +11,7 @@ export const Hero: React.FC = () => {
         {/* Background Image with Overlay */}
         <div className="absolute inset-0 z-0">
           <img
-            src="/images/backgrounds/bg.jpg"
+            src={assetUrl('/images/backgrounds/bg.jpg')}
             alt="Traditional Japanese Dining"
             className="w-full h-full object-cover opacity-60"
           />
@@ -24,7 +25,7 @@ export const Hero: React.FC = () => {
             transition={{ duration: 1, ease: "easeOut" }}
           >
             <img
-              src="/images/logo/logo-wh.png"
+              src={assetUrl('/images/logo/logo-wh.png')}
               alt="築地にっしん太助 ロゴ"
               className="mx-auto w-28 md:w-36 lg:w-44 h-auto mb-6"
               loading="eager"
@@ -79,7 +80,7 @@ export const Hero: React.FC = () => {
                 <div className="absolute top-0 left-1/2 -translate-x-1/2 w-20 h-5 bg-black rounded-b-xl z-20" />
                 <video
                   className="w-full h-auto block"
-                  src="/mov/unagi-short-compressed.mp4"
+                  src={assetUrl('/mov/unagi-short-compressed.mp4')}
                   autoPlay
                   loop
                   muted

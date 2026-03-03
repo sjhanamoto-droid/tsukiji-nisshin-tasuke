@@ -1,6 +1,7 @@
 import React from 'react';
 import { Section } from './Section';
 import { motion } from 'framer-motion';
+import { assetUrl } from '../lib/assets';
 
 export const About: React.FC = () => {
   return (
@@ -18,7 +19,7 @@ export const About: React.FC = () => {
             <div className="relative">
               <div className="absolute -top-4 -left-4 w-24 h-24 border-t-2 border-l-2 border-brand-gold opacity-50"></div>
               <img 
-                src="/images/image19.jpg"
+                src={assetUrl('/images/image19.jpg')}
                 alt="築地にっしん太助" 
                 className="w-full h-auto rounded-sm shadow-xl grayscale hover:grayscale-0 transition-all duration-700"
               />

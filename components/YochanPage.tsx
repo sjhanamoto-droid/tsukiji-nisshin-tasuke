@@ -1,6 +1,7 @@
 import React, { useEffect } from 'react';
 import { ArrowLeft, Heart, MessageCircle } from 'lucide-react';
 import { motion } from 'framer-motion';
+import { assetUrl } from '../lib/assets';
 
 interface YochanPageProps {
   onBack: () => void;
@@ -20,10 +21,10 @@ const PROFILE = [
 ];
 
 const GALLERY_IMAGES = [
-  { src: '/images/character/yochan02.png', alt: 'YO-chan ポーズ2' },
-  { src: '/images/character/yochan03.png', alt: 'YO-chan ポーズ3' },
-  { src: '/images/character/yochan04.png', alt: 'YO-chan ポーズ4' },
-  { src: '/images/character/yochan05.png', alt: 'YO-chan ポーズ5' },
+  { src: assetUrl('/images/character/yochan02.png'), alt: 'YO-chan ポーズ2' },
+  { src: assetUrl('/images/character/yochan03.png'), alt: 'YO-chan ポーズ3' },
+  { src: assetUrl('/images/character/yochan04.png'), alt: 'YO-chan ポーズ4' },
+  { src: assetUrl('/images/character/yochan05.png'), alt: 'YO-chan ポーズ5' },
 ];
 
 export const YochanPage: React.FC<YochanPageProps> = ({ onBack }) => {
@@ -57,7 +58,7 @@ export const YochanPage: React.FC<YochanPageProps> = ({ onBack }) => {
             </span>
           </button>
           <img
-            src="/images/logo/logo-wh.png"
+            src={assetUrl('/images/logo/logo-wh.png')}
             alt="築地にっしん太助"
             className="h-8 opacity-60"
           />
@@ -87,7 +88,7 @@ export const YochanPage: React.FC<YochanPageProps> = ({ onBack }) => {
             >
               <div className="relative">
                 <img
-                  src="/images/character/yochan01.png"
+                  src={assetUrl('/images/character/yochan01.png')}
                   alt="YO-chan"
                   className="w-48 md:w-64 lg:w-72 h-auto mx-auto"
                   style={{
@@ -273,7 +274,7 @@ export const YochanPage: React.FC<YochanPageProps> = ({ onBack }) => {
                   }}
                 />
                 <img
-                  src="/images/character/yochan06.png"
+                  src={assetUrl('/images/character/yochan06.png')}
                   alt="YO-chan — 鰻丼を届ける"
                   className="w-44 md:w-56 lg:w-64 h-auto relative z-10"
                   style={{

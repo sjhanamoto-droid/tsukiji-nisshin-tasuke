@@ -1,6 +1,7 @@
 import React, { useEffect } from 'react';
 import { ArrowLeft } from 'lucide-react';
 import { motion } from 'framer-motion';
+import { assetUrl } from '../lib/assets';
 
 interface CompanyPageProps {
   onBack: () => void;
@@ -65,7 +66,7 @@ export const CompanyPage: React.FC<CompanyPageProps> = ({ onBack }) => {
             </span>
           </button>
           <img
-            src="/images/logo/logo-wh.png"
+            src={assetUrl('/images/logo/logo-wh.png')}
             alt="築地にっしん太助"
             className="h-8 opacity-60"
           />
@@ -76,7 +77,7 @@ export const CompanyPage: React.FC<CompanyPageProps> = ({ onBack }) => {
       <div className="relative h-[50vh] min-h-[360px] max-h-[520px] overflow-hidden flex items-end">
         <div className="absolute inset-0">
           <img
-            src="/images/backgrounds/bg.jpg"
+            src={assetUrl('/images/backgrounds/bg.jpg')}
             alt="築地にっしん太助"
             className="w-full h-full object-cover"
           />

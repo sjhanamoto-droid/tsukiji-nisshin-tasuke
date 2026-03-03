@@ -1,6 +1,7 @@
 import React, { useEffect } from 'react';
 import { ArrowLeft, Stethoscope, Users, Presentation, Crown, Phone } from 'lucide-react';
 import { motion } from 'framer-motion';
+import { assetUrl } from '../lib/assets';
 
 interface CorporatePageProps {
   onBack: () => void;
@@ -14,7 +15,7 @@ const SERVICES = [
     desc: '医師・医療従事者への説明会やランチョンセミナーに最適。JetChefの加熱容器で、電子レンジ不要の温かいお弁当をお届けします。',
     detail: '紐を引くだけで温かいお食事を。医療現場の制約に配慮した設計です。',
     icon: Stethoscope,
-    image: '/images/kinunagi/unagi-king.jpg',
+    image: assetUrl('/images/kinunagi/unagi-king.jpg'),
   },
   {
     num: '02',
@@ -23,7 +24,7 @@ const SERVICES = [
     desc: '社内イベント、周年行事、式典、懇親会など、大人数のお食事に対応。ご予算・人数に合わせたプランをご提案します。',
     detail: '50食から500食以上まで、柔軟に対応いたします。',
     icon: Users,
-    image: '/images/kinunagi/hitumabusi.jpg',
+    image: assetUrl('/images/kinunagi/hitumabusi.jpg'),
   },
   {
     num: '03',
@@ -32,7 +33,7 @@ const SERVICES = [
     desc: '役員会議、取締役会、社内研修のランチに。JetChef容器で紐を引くだけ、配膳の手間なく温かいお食事を提供できます。',
     detail: '電源不要・静音。会議の進行を妨げません。',
     icon: Presentation,
-    image: '/images/blog/delivery-unagi.jpg',
+    image: assetUrl('/images/blog/delivery-unagi.jpg'),
   },
   {
     num: '04',
@@ -41,7 +42,7 @@ const SERVICES = [
     desc: 'VIPのお客様への接待、催事・展示会でのお弁当に。築地の名店の味で、特別なシーンを演出します。',
     detail: '高級感のある見た目とクオリティでお客様に喜ばれます。',
     icon: Crown,
-    image: '/images/kinunagi/shirokabayaki.jpg',
+    image: assetUrl('/images/kinunagi/shirokabayaki.jpg'),
   },
 ];
 
@@ -76,7 +77,7 @@ export const CorporatePage: React.FC<CorporatePageProps> = ({ onBack }) => {
             </span>
           </button>
           <img
-            src="/images/logo/logo-wh.png"
+            src={assetUrl('/images/logo/logo-wh.png')}
             alt="築地にっしん太助"
             className="h-8 opacity-60"
           />
