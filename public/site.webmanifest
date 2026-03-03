@@ -1,0 +1,21 @@
+{
+  "name": "築地にっしん太助 | 築地場外市場のうなぎ専門店",
+  "short_name": "にっしん太助",
+  "description": "築地場外市場に店を構える「築地にっしん太助」。うなぎ食堂・金のうなぎなど3店舗を展開。職人が一枚一枚丁寧に焼き上げる本格うなぎ料理をお手頃価格でお届けします。",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#0f0f0f",
+  "theme_color": "#0f0f0f",
+  "icons": [
+    {
+      "src": "/android-chrome-192x192.png",
+      "sizes": "192x192",
+      "type": "image/png"
+    },
+    {
+      "src": "/android-chrome-512x512.png",
+      "sizes": "512x512",
+      "type": "image/png"
+    }
+  ]
+}
