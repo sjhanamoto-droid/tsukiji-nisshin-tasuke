@@ -6,18 +6,23 @@ import { assetUrl } from '../lib/assets';
 const FEATURES = [
   {
     num: '01',
-    title: '湯気まで再現',
-    desc: '特殊な過熱水蒸気技術により、蓋を開けた瞬間に立ち上る湯気と香りを実現しました。',
+    title: '電子レンジ不要',
+    desc: '紐を引くだけで加熱スタート。電子レンジがなくても、どこでも温かいお弁当をお楽しみいただけます。',
   },
   {
     num: '02',
-    title: '驚きのスピード',
-    desc: '冷凍状態からわずか数分で、芯まで熱々の状態に。お待たせすることなく、極上の食事を。',
+    title: '約10分で80〜85℃の高温加熱',
+    desc: '一般的なヒモ引き式弁当の60〜70℃を大きく上回る高温を実現。作りたてのような熱々の美味しさをお届けします。',
   },
   {
     num: '03',
-    title: '感情体験テクノロジー',
-    desc: 'ただ温めるだけではありません。職人が作った瞬間の「感動」をそのまま食卓へ運びます。',
+    title: '20分以上の長時間保温',
+    desc: '加熱後も20分以上の保温が可能。配膳のタイミングに余裕が生まれ、最後のひと口まで温かくお召し上がりいただけます。',
+  },
+  {
+    num: '04',
+    title: '均一な加熱でムラなし',
+    desc: '新配合の高性能発熱剤と専用容器の組み合わせにより、容器全体を均一に加熱。加熱ムラのない美味しさを実現しました。',
   },
 ];
 
@@ -146,7 +151,7 @@ export const JetChef: React.FC = () => {
         </div>
 
         {/* ──── Features — editorial numbered cards ──── */}
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-5 lg:gap-6">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-5 lg:gap-6">
           {FEATURES.map((feature, idx) => (
             <motion.div
               key={idx}
