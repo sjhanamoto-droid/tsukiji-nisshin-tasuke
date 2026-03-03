@@ -1,5 +1,5 @@
 import React from 'react';
-import { ArrowDown } from 'lucide-react';
+import { ArrowDown, Instagram } from 'lucide-react';
 import { motion } from 'framer-motion';
 import { assetUrl } from '../lib/assets';
 
@@ -31,11 +31,11 @@ export const Hero: React.FC = () => {
               loading="eager"
               decoding="async"
             />
-            <h1 className="text-2xl md:text-4xl lg:text-5xl font-serif font-bold text-white leading-tight mb-8">
+            <h1 className="text-xl md:text-4xl lg:text-5xl font-serif font-bold text-white leading-tight mb-8">
               誰でも、いつでも、どこでも。<br />
               温かい"食のよろこび"を届ける。
             </h1>
-            <h2 className="text-white text-lg md:text-2xl font-serif tracking-widest mt-2">
+            <h2 className="text-white text-base md:text-2xl font-serif tracking-widest mt-2">
               築地にっしん太助
             </h2>
           </motion.div>
@@ -88,6 +88,31 @@ export const Hero: React.FC = () => {
                   style={{ aspectRatio: '9/16' }}
                 />
               </div>
+              <a
+                href="https://www.instagram.com/tsukijiunagi/"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="flex items-center justify-center gap-2 mt-4 py-2.5 w-full rounded-lg text-[13px] tracking-wide transition-all duration-300 no-underline"
+                style={{
+                  color: 'rgba(255,255,255,0.6)',
+                  border: '1px solid rgba(255,255,255,0.1)',
+                  fontFamily: '"Noto Sans JP", sans-serif',
+                  fontWeight: 400,
+                }}
+                onMouseEnter={(e: React.MouseEvent<HTMLAnchorElement>) => {
+                  e.currentTarget.style.color = '#fff';
+                  e.currentTarget.style.borderColor = 'rgba(255,255,255,0.3)';
+                  e.currentTarget.style.background = 'rgba(255,255,255,0.05)';
+                }}
+                onMouseLeave={(e: React.MouseEvent<HTMLAnchorElement>) => {
+                  e.currentTarget.style.color = 'rgba(255,255,255,0.6)';
+                  e.currentTarget.style.borderColor = 'rgba(255,255,255,0.1)';
+                  e.currentTarget.style.background = 'transparent';
+                }}
+              >
+                <Instagram size={15} strokeWidth={1.5} />
+                <span>@tsukijiunagi</span>
+              </a>
             </motion.div>
 
             {/* Text content */}
