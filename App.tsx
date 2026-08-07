@@ -3,7 +3,7 @@ import { Navigation } from './components/Navigation';
 import { Hero } from './components/Hero';
 import { About } from './components/About';
 import { ForYou } from './components/ForYou';
-import { GivingBack } from './components/GivingBack';
+// import { GivingBack } from './components/GivingBack'; // 非表示中
 import { Story } from './components/Story';
 import { JetChef } from './components/JetChef';
 import { Locations } from './components/Locations';
@@ -193,7 +193,7 @@ function App() {
         <Hero />
         <About />
         <ForYou />
-        <GivingBack />
+        {/* <GivingBack /> 非表示（社会貢献セクション） */}
         <Story />
         <JetChef />
         <Locations />
