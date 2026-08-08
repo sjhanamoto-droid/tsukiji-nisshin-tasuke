@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { Navigation } from './components/Navigation';
 import { Hero } from './components/Hero';
+import { InstagramSection } from './components/InstagramSection';
 import { About } from './components/About';
 import { ForYou } from './components/ForYou';
 import { GivingBack } from './components/GivingBack';
@@ -154,6 +155,7 @@ function App() {
         return (
           <>
             <Hero />
+            <InstagramSection />
             <About />
             <ForYou />
             <GivingBack />
