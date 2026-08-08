@@ -68,7 +68,7 @@ export const InstagramSection: React.FC = () => {
             viewport={{ once: true }}
             transition={{ duration: 0.7, delay: 0.1 }}
           >
-            インスタグラムでも、配信中。
+            インスタグラムでも<br />配信中！
           </motion.h2>
 
           {/* Body */}
