@@ -3,7 +3,7 @@ import { Navigation } from './components/Navigation';
 import { Hero } from './components/Hero';
 import { About } from './components/About';
 import { ForYou } from './components/ForYou';
-// import { GivingBack } from './components/GivingBack'; // 非表示中
+import { GivingBack } from './components/GivingBack';
 import { Story } from './components/Story';
 import { JetChef } from './components/JetChef';
 import { Locations } from './components/Locations';
@@ -94,112 +94,87 @@ function App() {
     return () => window.removeEventListener('hashchange', handleHash);
   }, []);
 
-  if (page.type === 'article') {
-    return (
-      <ArticlePage
-        articleId={page.id}
-        onBack={() => {
-          window.location.hash = '#column';
-          setPage({ type: 'home' });
-        }}
-      />
-    );
-  }
+  // 各ビューの本文。共通ヘッダー/フッターは下の Chrome で常に描画する。
+  const renderContent = () => {
+    switch (page.type) {
+      case 'article':
+        return (
+          <ArticlePage
+            articleId={page.id}
+            onBack={() => { window.location.hash = '#column'; }}
+          />
+        );
+      case 'consumer':
+        return (
+          <ConsumerPage
+            onBack={() => { window.location.hash = '#foryou'; }}
+          />
+        );
+      case 'corporate':
+        return (
+          <CorporatePage
+            onBack={() => { window.location.hash = '#foryou'; }}
+          />
+        );
+      case 'company':
+        return (
+          <CompanyPage
+            onBack={() => { window.location.hash = '#about'; }}
+          />
+        );
+      case 'newslist':
+        return (
+          <NewsListPage
+            page={page.page}
+            onBack={() => { window.location.hash = '#news'; }}
+          />
+        );
+      case 'news':
+        return (
+          <NewsPage
+            newsId={page.id}
+            onBack={() => { window.location.hash = '#newslist'; }}
+          />
+        );
+      case 'shop':
+        return (
+          <ShopPage
+            shopId={page.id}
+            onBack={() => { window.location.hash = '#locations'; }}
+          />
+        );
+      case 'yochan':
+        return (
+          <YochanPage
+            onBack={() => { window.location.hash = '#story'; }}
+          />
+        );
+      case 'home':
+      default:
+        return (
+          <>
+            <Hero />
+            <About />
+            <ForYou />
+            <GivingBack />
+            <Story />
+            <JetChef />
+            <Locations />
+            <Column />
+            <News />
+          </>
+        );
+    }
+  };
 
-  if (page.type === 'consumer') {
-    return (
-      <ConsumerPage
-        onBack={() => {
-          window.location.hash = '#foryou';
-          setPage({ type: 'home' });
-        }}
-      />
-    );
-  }
-
-  if (page.type === 'corporate') {
-    return (
-      <CorporatePage
-        onBack={() => {
-          window.location.hash = '#foryou';
-          setPage({ type: 'home' });
-        }}
-      />
-    );
-  }
-
-  if (page.type === 'company') {
-    return (
-      <CompanyPage
-        onBack={() => {
-          window.location.hash = '#about';
-          setPage({ type: 'home' });
-        }}
-      />
-    );
-  }
-
-  if (page.type === 'newslist') {
-    return (
-      <NewsListPage
-        page={page.page}
-        onBack={() => {
-          window.location.hash = '#news';
-          setPage({ type: 'home' });
-        }}
-      />
-    );
-  }
-
-  if (page.type === 'news') {
-    return (
-      <NewsPage
-        newsId={page.id}
-        onBack={() => {
-          window.location.hash = '#newslist';
-          setPage({ type: 'newslist', page: 1 });
-        }}
-      />
-    );
-  }
-
-  if (page.type === 'shop') {
-    return (
-      <ShopPage
-        shopId={page.id}
-        onBack={() => {
-          window.location.hash = '#locations';
-          setPage({ type: 'home' });
-        }}
-      />
-    );
-  }
-
-  if (page.type === 'yochan') {
-    return (
-      <YochanPage
-        onBack={() => {
-          window.location.hash = '#story';
-          setPage({ type: 'home' });
-        }}
-      />
-    );
-  }
+  const isHome = page.type === 'home';
 
   return (
     <div className="w-full overflow-hidden">
-      <Navigation />
-      <main>
-        <Hero />
-        <About />
-        <ForYou />
-        {/* <GivingBack /> 非表示（社会貢献セクション） */}
-        <Story />
-        <JetChef />
-        <Locations />
-        <Column />
-        <News />
-      </main>
+      {/* サイト共通ヘッダー。サブページでは常時ソリッド背景で表示 */}
+      <Navigation solid={!isHome} />
+      <main>{renderContent()}</main>
+      {/* サイト共通フッター */}
       <Footer />
     </div>
   );

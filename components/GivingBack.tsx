@@ -134,6 +134,8 @@ export const GivingBack: React.FC = () => {
         </div>
 
         {/* ──── Activity Cards ──── */}
+        {/* 活動カード（白い朝顔プロジェクト / がんの子どもを守る会）は現在非表示 */}
+        {false && (
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6 lg:gap-8">
 
           {/* Card 1: 白い朝顔プロジェクト */}
@@ -254,6 +256,7 @@ export const GivingBack: React.FC = () => {
             </p>
           </motion.div>
         </div>
+        )}
 
         {/* ──── Bottom message ──── */}
         <div className="mt-20 md:mt-28 text-center overflow-hidden">
