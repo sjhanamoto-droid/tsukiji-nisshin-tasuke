@@ -155,12 +155,12 @@ function App() {
         return (
           <>
             <Hero />
-            <InstagramSection />
             <About />
             <ForYou />
             <GivingBack />
             <Story />
             <JetChef />
+            <InstagramSection />
             <Locations />
             <Column />
             <News />
