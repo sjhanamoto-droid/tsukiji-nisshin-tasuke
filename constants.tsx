@@ -3,13 +3,13 @@ import { Home, Info, Gift, Heart, BookOpen, Utensils, MapPin } from 'lucide-reac
 import React from 'react';
 import { assetUrl } from './lib/assets';
 
+// ヘッダーメニュー: 各項目は独立したページへ遷移する（LP内スクロールではない）
 export const NAV_ITEMS: NavItem[] = [
   { label: 'TOP', href: '#hero' },
-  { label: '私たちについて', href: '#about' },
-  { label: 'ご利用シーン', href: '#foryou' },
-  { label: '社会貢献', href: '#givingback' },
-  { label: 'ストーリー', href: '#story' },
-  { label: 'JetChef', href: '#jetchef' },
+  { label: '会社案内', href: '#company' },
+  { label: '個人のお客様へ', href: '#consumer' },
+  { label: '法人のお客様へ', href: '#corporate' },
+  { label: 'ようちゃんとは', href: '#yochan' },
   { label: '店舗案内', href: '#locations' },
 ];
 

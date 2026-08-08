@@ -30,19 +30,7 @@ export const ArticlePage: React.FC<ArticlePageProps> = ({ articleId, onBack }) =
   if (loading && isMicroCMSConfigured) {
     return (
       <div className="min-h-screen bg-brand-cream">
-        <div
-          className="fixed top-0 left-0 w-full z-50 py-3"
-          style={{ background: 'rgba(15,15,15,0.95)', backdropFilter: 'blur(12px)', WebkitBackdropFilter: 'blur(12px)' }}
-        >
-          <div className="max-w-4xl mx-auto px-5 flex items-center">
-            <button onClick={onBack} className="flex items-center gap-2 text-white/70 hover:text-white transition-colors">
-              <ArrowLeft size={18} strokeWidth={1.5} />
-              <span className="text-[13px] tracking-wide" style={{ fontFamily: '"Noto Sans JP", sans-serif', fontWeight: 300 }}>
-                コラム一覧に戻る
-              </span>
-            </button>
-          </div>
-        </div>
+        {/* ヘッダーはサイト共通の <Navigation />（App.tsx）を使用 */}
         <div className="pt-24"><LoadingSpinner /></div>
       </div>
     );
@@ -61,30 +49,7 @@ export const ArticlePage: React.FC<ArticlePageProps> = ({ articleId, onBack }) =
 
   return (
     <div className="min-h-screen bg-brand-cream">
-      {/* Header bar */}
-      <div
-        className="fixed top-0 left-0 w-full z-50 py-3"
-        style={{
-          background: 'rgba(15,15,15,0.95)',
-          backdropFilter: 'blur(12px)',
-          WebkitBackdropFilter: 'blur(12px)',
-        }}
-      >
-        <div className="max-w-4xl mx-auto px-5 flex items-center">
-          <button
-            onClick={onBack}
-            className="flex items-center gap-2 text-white/70 hover:text-white transition-colors"
-          >
-            <ArrowLeft size={18} strokeWidth={1.5} />
-            <span
-              className="text-[13px] tracking-wide"
-              style={{ fontFamily: '"Noto Sans JP", sans-serif', fontWeight: 300 }}
-            >
-              コラム一覧に戻る
-            </span>
-          </button>
-        </div>
-      </div>
+      {/* ヘッダーはサイト共通の <Navigation />（App.tsx）を使用 */}
 
       {/* Hero image */}
       <div className="relative w-full h-[40vh] md:h-[50vh] overflow-hidden">

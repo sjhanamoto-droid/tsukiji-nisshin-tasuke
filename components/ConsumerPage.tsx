@@ -65,36 +65,7 @@ export const ConsumerPage: React.FC<ConsumerPageProps> = ({ onBack }) => {
 
   return (
     <div className="min-h-screen bg-[#0a0a0a]">
-      {/* Fixed header */}
-      <div
-        className="fixed top-0 left-0 w-full z-50 py-3"
-        style={{
-          background: 'rgba(10,10,10,0.9)',
-          backdropFilter: 'blur(12px)',
-          WebkitBackdropFilter: 'blur(12px)',
-          borderBottom: '1px solid rgba(255,255,255,0.04)',
-        }}
-      >
-        <div className="max-w-7xl mx-auto px-5 flex items-center justify-between">
-          <button
-            onClick={onBack}
-            className="flex items-center gap-2 text-white/60 hover:text-white transition-colors"
-          >
-            <ArrowLeft size={18} strokeWidth={1.5} />
-            <span
-              className="text-[13px] tracking-wide"
-              style={{ fontFamily: '"Noto Sans JP", sans-serif', fontWeight: 300 }}
-            >
-              トップページに戻る
-            </span>
-          </button>
-          <img
-            src={assetUrl('/images/logo/logo-wh.png')}
-            alt="築地にっしん太助"
-            className="h-8 opacity-60"
-          />
-        </div>
-      </div>
+      {/* ヘッダーはサイト共通の <Navigation />（App.tsx）を使用 */}
 
       {/* Hero header */}
       <div className="pt-24 pb-12 md:pt-28 md:pb-16 px-5">

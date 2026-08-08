@@ -1,31 +1,36 @@
 import React, { useState, useEffect, useRef } from 'react';
-import { Menu, X, Phone } from 'lucide-react';
+import { Phone } from 'lucide-react';
 import { NAV_ITEMS } from '../constants';
 import { motion, AnimatePresence } from 'framer-motion';
 import { assetUrl } from '../lib/assets';
 
-export const Navigation: React.FC = () => {
+interface NavigationProps {
+  /** サブページでは常時ソリッド背景で表示する（トップページのヒーロー上では透過→スクロールでソリッド） */
+  solid?: boolean;
+}
+
+const HOME_HASHES = ['', '#', '#hero'];
+
+export const Navigation: React.FC<NavigationProps> = ({ solid = false }) => {
   const [isOpen, setIsOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
-  const [activeSection, setActiveSection] = useState('#hero');
+  const [activeHash, setActiveHash] = useState<string>(
+    typeof window !== 'undefined' ? window.location.hash : ''
+  );
   const navRef = useRef<HTMLElement>(null);
 
   useEffect(() => {
-    const handleScroll = () => {
-      setScrolled(window.scrollY > 80);
-
-      // Track active section
-      const sections = NAV_ITEMS.map(item => item.href.replace('#', ''));
-      for (let i = sections.length - 1; i >= 0; i--) {
-        const el = document.getElementById(sections[i]);
-        if (el && el.getBoundingClientRect().top <= 120) {
-          setActiveSection(`#${sections[i]}`);
-          break;
-        }
-      }
-    };
+    const handleScroll = () => setScrolled(window.scrollY > 80);
     window.addEventListener('scroll', handleScroll, { passive: true });
     return () => window.removeEventListener('scroll', handleScroll);
+  }, []);
+
+  // 現在のページ（hash）を追跡してアクティブ表示に反映
+  useEffect(() => {
+    const handleHash = () => setActiveHash(window.location.hash);
+    handleHash();
+    window.addEventListener('hashchange', handleHash);
+    return () => window.removeEventListener('hashchange', handleHash);
   }, []);
 
   // Lock body scroll when mobile menu is open
@@ -34,7 +39,14 @@ export const Navigation: React.FC = () => {
     return () => { document.body.style.overflow = ''; };
   }, [isOpen]);
 
-  // Filter nav items for desktop — skip "TOP"
+  // サブページ、またはスクロール時はソリッド表示
+  const solidBar = solid || scrolled;
+
+  // 各メニューがアクティブか（TOPはトップページのヒーロー相当のとき）
+  const isItemActive = (href: string) =>
+    href === '#hero' ? HOME_HASHES.includes(activeHash) : activeHash === href;
+
+  // Filter nav items for desktop — skip "TOP"（ロゴがTOPの役割）
   const desktopNavItems = NAV_ITEMS.filter(item => item.label !== 'TOP');
 
   return (
@@ -43,16 +55,16 @@ export const Navigation: React.FC = () => {
       <nav
         ref={navRef}
         className={`fixed top-0 left-0 w-full z-50 transition-all duration-500 ease-out ${
-          scrolled
+          solidBar
             ? 'py-2'
             : 'py-4 lg:py-5'
         }`}
         style={{
-          background: scrolled
+          background: solidBar
             ? 'rgba(15, 15, 15, 0.92)'
             : 'linear-gradient(to bottom, rgba(0,0,0,0.6) 0%, rgba(0,0,0,0.15) 70%, transparent 100%)',
-          backdropFilter: scrolled ? 'blur(12px) saturate(1.4)' : 'none',
-          WebkitBackdropFilter: scrolled ? 'blur(12px) saturate(1.4)' : 'none',
+          backdropFilter: solidBar ? 'blur(12px) saturate(1.4)' : 'none',
+          WebkitBackdropFilter: solidBar ? 'blur(12px) saturate(1.4)' : 'none',
         }}
       >
         {/* Gold accent line at very top */}
@@ -61,13 +73,13 @@ export const Navigation: React.FC = () => {
           style={{
             height: '1px',
             background: 'linear-gradient(90deg, transparent 5%, #B45309 30%, #d4a574 50%, #B45309 70%, transparent 95%)',
-            opacity: scrolled ? 1 : 0,
+            opacity: solidBar ? 1 : 0,
           }}
         />
 
         <div className="max-w-7xl mx-auto px-5 lg:px-8 flex items-center justify-between">
 
-          {/* ──── Logo ──── */}
+          {/* ──── Logo（クリックでトップページへ） ──── */}
           <a
             href="#hero"
             className="relative z-50 flex items-center gap-3 group"
@@ -77,7 +89,7 @@ export const Navigation: React.FC = () => {
               src={assetUrl("/images/logo/logo-wh.png")}
               alt="築地にっしん太助"
               className={`transition-all duration-500 ${
-                scrolled ? 'h-10 lg:h-11' : 'h-12 lg:h-14'
+                solidBar ? 'h-10 lg:h-11' : 'h-12 lg:h-14'
               }`}
               style={{ filter: 'drop-shadow(0 1px 3px rgba(0,0,0,0.3))' }}
               initial={{ opacity: 0, x: -12 }}
@@ -87,7 +99,7 @@ export const Navigation: React.FC = () => {
             <div className="hidden sm:flex flex-col">
               <span
                 className={`font-serif font-semibold text-white leading-none tracking-wider transition-all duration-500 ${
-                  scrolled ? 'text-sm' : 'text-base lg:text-lg'
+                  solidBar ? 'text-sm' : 'text-base lg:text-lg'
                 }`}
                 style={{ textShadow: '0 1px 4px rgba(0,0,0,0.3)' }}
               >
@@ -95,7 +107,7 @@ export const Navigation: React.FC = () => {
               </span>
               <span
                 className={`text-white/50 tracking-[0.25em] uppercase transition-all duration-500 ${
-                  scrolled ? 'text-[9px]' : 'text-[10px]'
+                  solidBar ? 'text-[9px]' : 'text-[10px]'
                 }`}
                 style={{ fontFamily: '"Noto Sans JP", sans-serif', fontWeight: 300 }}
               >
@@ -108,7 +120,7 @@ export const Navigation: React.FC = () => {
           <div className="hidden lg:flex items-center">
             <ul className="flex items-center gap-1">
               {desktopNavItems.map((item, idx) => {
-                const isActive = activeSection === item.href;
+                const isActive = isItemActive(item.href);
                 return (
                   <li key={idx}>
                     <a
@@ -202,7 +214,7 @@ export const Navigation: React.FC = () => {
           style={{
             height: '1px',
             background: 'linear-gradient(90deg, transparent 10%, rgba(255,255,255,0.06) 50%, transparent 90%)',
-            opacity: scrolled ? 1 : 0,
+            opacity: solidBar ? 1 : 0,
           }}
         />
       </nav>
@@ -254,35 +266,38 @@ export const Navigation: React.FC = () => {
               {/* Navigation Links */}
               <nav className="flex-1">
                 <ul className="space-y-1">
-                  {NAV_ITEMS.map((item, idx) => (
-                    <motion.li
-                      key={idx}
-                      initial={{ opacity: 0, x: -20 }}
-                      animate={{ opacity: 1, x: 0 }}
-                      transition={{ delay: 0.2 + idx * 0.05, duration: 0.35, ease: 'easeOut' }}
-                    >
-                      <a
-                        href={item.href}
-                        className="flex items-center py-3 group"
-                        onClick={() => setIsOpen(false)}
+                  {NAV_ITEMS.map((item, idx) => {
+                    const isActive = isItemActive(item.href);
+                    return (
+                      <motion.li
+                        key={idx}
+                        initial={{ opacity: 0, x: -20 }}
+                        animate={{ opacity: 1, x: 0 }}
+                        transition={{ delay: 0.2 + idx * 0.05, duration: 0.35, ease: 'easeOut' }}
                       >
-                        <span
-                          className="w-6 h-[1px] mr-4 transition-all duration-300 group-hover:w-10 group-hover:bg-brand-gold"
-                          style={{ background: activeSection === item.href ? '#B45309' : 'rgba(255,255,255,0.2)' }}
-                        />
-                        <span
-                          className="text-xl tracking-wide transition-colors duration-300 group-hover:text-brand-gold"
-                          style={{
-                            fontFamily: '"Noto Serif JP", serif',
-                            fontWeight: activeSection === item.href ? 600 : 300,
-                            color: activeSection === item.href ? '#d4a574' : 'rgba(255,255,255,0.8)',
-                          }}
+                        <a
+                          href={item.href}
+                          className="flex items-center py-3 group"
+                          onClick={() => setIsOpen(false)}
                         >
-                          {item.label}
-                        </span>
-                      </a>
-                    </motion.li>
-                  ))}
+                          <span
+                            className="w-6 h-[1px] mr-4 transition-all duration-300 group-hover:w-10 group-hover:bg-brand-gold"
+                            style={{ background: isActive ? '#B45309' : 'rgba(255,255,255,0.2)' }}
+                          />
+                          <span
+                            className="text-xl tracking-wide transition-colors duration-300 group-hover:text-brand-gold"
+                            style={{
+                              fontFamily: '"Noto Serif JP", serif',
+                              fontWeight: isActive ? 600 : 300,
+                              color: isActive ? '#d4a574' : 'rgba(255,255,255,0.8)',
+                            }}
+                          >
+                            {item.label}
+                          </span>
+                        </a>
+                      </motion.li>
+                    );
+                  })}
                 </ul>
               </nav>
 
