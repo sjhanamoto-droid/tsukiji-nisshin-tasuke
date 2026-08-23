@@ -39,6 +39,34 @@
     <!-- Canonical -->
     <link rel="canonical" href="https://tsukijiunagisyokudo.jp/" />
 
+    <!-- 構造化データ（サイト共通: WebSite / Organization）。店舗ごとの Restaurant は各ページで動的付与 -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@graph": [
+        {
+          "@type": "WebSite",
+          "@id": "https://tsukijiunagisyokudo.jp/#website",
+          "name": "築地にっしん太助",
+          "url": "https://tsukijiunagisyokudo.jp/",
+          "inLanguage": "ja"
+        },
+        {
+          "@type": "Organization",
+          "@id": "https://tsukijiunagisyokudo.jp/#organization",
+          "name": "築地にっしん太助",
+          "url": "https://tsukijiunagisyokudo.jp/",
+          "logo": "https://tsukijiunagisyokudo.jp/android-chrome-512x512.png",
+          "image": "https://tsukijiunagisyokudo.jp/og-image.jpg",
+          "description": "築地場外市場に店を構える「築地にっしん太助」。うなぎ食堂・金のうなぎなど3店舗を展開。職人が一枚一枚丁寧に焼き上げる本格うなぎ料理をお手頃価格でお届けします。特許取得のJetChef加熱容器による宅配にも対応。",
+          "sameAs": [
+            "https://www.instagram.com/tsukijiunagi/"
+          ]
+        }
+      ]
+    }
+    </script>
+
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>

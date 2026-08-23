@@ -19,34 +19,34 @@ import { YochanPage } from './components/YochanPage';
 import { NewsPage } from './components/NewsPage';
 import { NewsListPage } from './components/NewsListPage';
 import { ShopPage } from './components/ShopPage';
-import { useRoute, navigate, scrollToTarget, PageView } from './lib/router';
-import { SHOPS, NEWS, COLUMNS } from './constants';
+import { useRoute, navigate, scrollToTarget } from './lib/router';
+import { titleFor, descriptionFor, jsonLdFor } from './lib/seo';
 
-const SITE_SUFFIX = ' | 築地にっしん太助';
-const BASE_TITLE = '築地にっしん太助 | 築地場外市場のうなぎ専門店';
-
-// 各ルートの <title>（SEO：ページごとに一意なタイトルを付ける）
-function titleFor(page: PageView): string {
-  switch (page.type) {
-    case 'company': return '会社案内' + SITE_SUFFIX;
-    case 'consumer': return '個人のお客様へ' + SITE_SUFFIX;
-    case 'corporate': return '法人のお客様へ' + SITE_SUFFIX;
-    case 'yochan': return 'ようちゃんとは' + SITE_SUFFIX;
-    case 'newslist': return 'お知らせ一覧' + SITE_SUFFIX;
-    case 'news': {
-      const n = NEWS.find(x => x.id === page.id);
-      return (n ? n.title : 'お知らせ') + SITE_SUFFIX;
-    }
-    case 'article': {
-      const c = COLUMNS.find(x => x.id === page.id);
-      return (c ? c.title : 'コラム') + SITE_SUFFIX;
-    }
-    case 'shop': {
-      const s = SHOPS.find(x => x.id === page.id);
-      return (s ? s.name : '店舗案内') + SITE_SUFFIX;
-    }
-    default: return BASE_TITLE;
+// <meta name="..."> を無ければ作成し、あれば更新する
+function upsertMetaByName(name: string, content: string) {
+  let el = document.head.querySelector<HTMLMetaElement>(`meta[name="${name}"]`);
+  if (!el) {
+    el = document.createElement('meta');
+    el.setAttribute('name', name);
+    document.head.appendChild(el);
   }
+  el.setAttribute('content', content);
+}
+
+// ルート別の JSON-LD を <script id="route-jsonld"> に反映（空なら削除）
+function setRouteJsonLd(data: { '@graph': object[] }) {
+  const existing = document.getElementById('route-jsonld');
+  if (!data['@graph'].length) {
+    if (existing) existing.remove();
+    return;
+  }
+  const el = existing || document.createElement('script');
+  if (!existing) {
+    el.setAttribute('type', 'application/ld+json');
+    el.id = 'route-jsonld';
+    document.head.appendChild(el);
+  }
+  el.textContent = JSON.stringify(data);
 }
 
 function App() {
@@ -74,13 +74,15 @@ function App() {
     if (window.location.hash) scrollToTarget(window.location.hash);
   }, []);
 
-  // ルートが変わるたびに <title> と canonical を更新（SEO）
+  // ルートが変わるたびに <title> / description / canonical / JSON-LD を更新（SEO）
   useEffect(() => {
     document.title = titleFor(page);
+    upsertMetaByName('description', descriptionFor(page));
     const canonical = document.querySelector('link[rel="canonical"]');
     if (canonical) {
       canonical.setAttribute('href', window.location.origin + window.location.pathname);
     }
+    setRouteJsonLd(jsonLdFor(page));
   }, [page]);
 
   // 各ビューの本文。共通ヘッダー/フッターは下の Chrome で常に描画する。
