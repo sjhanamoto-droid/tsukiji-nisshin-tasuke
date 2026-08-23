@@ -55,7 +55,7 @@ export const Story: React.FC = () => {
               </p>
             </div>
             <a
-              href="#yochan"
+              href="/yochan"
               className="inline-block px-8 py-3 border border-white text-white hover:bg-white hover:text-brand-dark transition-colors duration-300 rounded-sm font-serif mt-4"
             >
               YO-chanについて

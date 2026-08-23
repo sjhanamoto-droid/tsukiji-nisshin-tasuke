@@ -3,14 +3,15 @@ import { Home, Info, Gift, Heart, BookOpen, Utensils, MapPin } from 'lucide-reac
 import React from 'react';
 import { assetUrl } from './lib/assets';
 
-// ヘッダーメニュー: 各項目は独立したページへ遷移する（LP内スクロールではない）
+// ヘッダーメニュー: 各項目は独立したページ（実URL）へ遷移する。
+// 「/#locations」はトップページ内セクションへのスクロール。
 export const NAV_ITEMS: NavItem[] = [
-  { label: 'TOP', href: '#hero' },
-  { label: '会社案内', href: '#company' },
-  { label: '個人のお客様へ', href: '#consumer' },
-  { label: '法人のお客様へ', href: '#corporate' },
-  { label: 'ようちゃんとは', href: '#yochan' },
-  { label: '店舗案内', href: '#locations' },
+  { label: 'TOP', href: '/' },
+  { label: '会社案内', href: '/company' },
+  { label: '個人のお客様へ', href: '/consumer' },
+  { label: '法人のお客様へ', href: '/corporate' },
+  { label: 'ようちゃんとは', href: '/yochan' },
+  { label: '店舗案内', href: '/#locations' },
 ];
 
 export const SHOPS: ShopInfo[] = [

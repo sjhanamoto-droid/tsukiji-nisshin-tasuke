@@ -1,0 +1,88 @@
+====================================================================
+築地にっしん太助 サイト 全ページ一覧 / サイトマップ
+====================================================================
+更新日: 2026-08-23
+ベースURL: https://tsukijiunagisyokudo.jp/
+構成: React SPA（パスベースルーティング。各ページが実URL・#不使用）
+
+--------------------------------------------------------------------
+■ 全ページ一覧（実URL）
+--------------------------------------------------------------------
+
+【1】トップページ  /
+  1枚のLP。以下のセクションで構成（セクション内移動のみ /#... を使用）。
+    Hero / About(#about) / ForYou(#foryou) / GivingBack(#givingback)
+    / Story(#story) / JetChef(#jetchef) / Instagram(#instagram)
+    / Locations(#locations) / Column(#column) / News(#news)
+
+【2】独立サブページ
+    会社案内            /company
+    個人のお客様へ      /consumer
+    法人のお客様へ      /corporate
+    ようちゃんとは      /yochan
+
+【3】店舗詳細ページ（3店舗）
+    築地うなぎ食堂              /shop/tsukiji
+    金のうなぎ 上野毛店         /shop/kaminoge
+    金のうなぎ 中村橋店         /shop/nakamurabashi
+
+【4】コラム記事
+    会議室がレストランに — JET CHEF…            /column/1
+    JETCHEFとは？ 電子レンジ不要で温まる…       /column/2
+
+【5】お知らせ
+    お知らせ一覧                     /news （ページ送りは /news/page/2 …）
+    年末年始の営業について           /news/nenmatsu-2025
+    シンガポール伊勢丹 花火祭り       /news/singapore-hanabi-2025
+    JET CHEF 特許取得のお知らせ       /news/jetchef-patent-2025
+    YO CHAN BENTO 商標登録           /news/yochan-bento-trademark
+
+--------------------------------------------------------------------
+■ サイトマップ（ツリー構造）
+--------------------------------------------------------------------
+
+築地にっしん太助（/）
+│
+├─ トップページ（/）
+│   └─ セクション: #about #foryou #givingback #story #jetchef
+│                    #instagram #locations #column #news
+│
+├─ 会社案内            /company
+├─ 個人のお客様へ      /consumer
+├─ 法人のお客様へ      /corporate
+├─ ようちゃんとは      /yochan
+│
+├─ 店舗詳細
+│   ├─ /shop/tsukiji（築地うなぎ食堂）
+│   ├─ /shop/kaminoge（金のうなぎ 上野毛店）
+│   └─ /shop/nakamurabashi（金のうなぎ 中村橋店）
+│
+├─ コラム記事
+│   ├─ /column/1
+│   └─ /column/2
+│
+└─ お知らせ  /news
+    ├─ /news/page/2 …（一覧ページ送り）
+    └─ 個別記事
+        ├─ /news/nenmatsu-2025
+        ├─ /news/singapore-hanabi-2025
+        ├─ /news/jetchef-patent-2025
+        └─ /news/yochan-bento-trademark
+
+--------------------------------------------------------------------
+■ 補足
+--------------------------------------------------------------------
+・検索エンジン向け sitemap.xml（/public/sitemap.xml）に全15URLを掲載済み。
+  各ページが個別の実URLとしてクロール・インデックスされます。
+
+・SPA構成のため、直リンク/リロードで404にならないよう vercel.json の
+  rewrite（全パス→ /index.html）を設定済み。
+
+・ページ内スクロール（/#locations 等）は正しい # 用法として維持。
+
+・ドメイン：正式ドメインは tsukijiunagisyokudo.jp（Vercel稼働）。
+  ※ nisshintasuke.co.jp は別のWordPressサイト。混同しないこと。
+
+・残る改善余地：本文はクライアント描画（JS）。SNSシェア用OGや検索の
+  確実性を最大化するなら、各ページの事前レンダリング(SSG/SSR)が理想。
+====================================================================

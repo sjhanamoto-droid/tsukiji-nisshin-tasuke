@@ -86,7 +86,7 @@ export const NewsListPage: React.FC<NewsListPageProps> = ({ page, onBack }) => {
               {pageItems.map((item, idx) => (
                 <motion.a
                   key={item.id}
-                  href={`#news/${item.id}`}
+                  href={`/news/${item.id}`}
                   className="block py-6 flex flex-col md:flex-row md:items-center group no-underline"
                   initial={{ opacity: 0, y: 10 }}
                   animate={{ opacity: 1, y: 0 }}
@@ -137,7 +137,7 @@ export const NewsListPage: React.FC<NewsListPageProps> = ({ page, onBack }) => {
               <div className="mt-14 flex justify-center">
                 {currentPage < totalPages && (
                   <a
-                    href={`#newslist/${currentPage + 1}`}
+                    href={`/news/page/${currentPage + 1}`}
                     className="inline-flex items-center gap-2 px-8 py-3 text-[13px] tracking-wide no-underline transition-colors"
                     style={{
                       color: '#B45309',

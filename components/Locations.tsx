@@ -63,7 +63,7 @@ export const Locations: React.FC = () => {
                 </div>
 
                 <a
-                    href={`#shop/${shop.id}`}
+                    href={`/shop/${shop.id}`}
                     className="block w-full border border-brand-dark text-brand-dark py-3 rounded-sm hover:bg-brand-dark hover:text-white transition-colors text-sm font-medium text-center no-underline"
                 >
                     詳細へ

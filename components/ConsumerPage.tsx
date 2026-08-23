@@ -2,6 +2,7 @@ import React, { useEffect } from 'react';
 import { ArrowLeft, Bike, MapPin, Gift, ExternalLink, ArrowRight } from 'lucide-react';
 import { motion } from 'framer-motion';
 import { assetUrl } from '../lib/assets';
+import { navigate } from '../lib/router';
 
 interface ConsumerPageProps {
   onBack: () => void;
@@ -28,7 +29,7 @@ const CHOICES = [
     detail: '築地うなぎ食堂・金のうなぎ各店舗でお待ちしております。',
     icon: MapPin,
     image: assetUrl('/images/kinunagi/main.jpg'),
-    href: '#locations',
+    href: '/#locations',
     external: false,
     cta: '店舗案内を見る',
   },
@@ -55,11 +56,8 @@ export const ConsumerPage: React.FC<ConsumerPageProps> = ({ onBack }) => {
     if (choice.external) {
       window.open(choice.href, '_blank', 'noopener,noreferrer');
     } else {
-      onBack();
-      setTimeout(() => {
-        const hash = choice.href;
-        window.location.hash = hash;
-      }, 100);
+      // トップページの該当セクションへ遷移（/#locations 等）
+      navigate(choice.href);
     }
   };
 

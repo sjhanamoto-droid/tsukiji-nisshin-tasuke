@@ -9,13 +9,12 @@ interface NavigationProps {
   solid?: boolean;
 }
 
-const HOME_HASHES = ['', '#', '#hero'];
-
 export const Navigation: React.FC<NavigationProps> = ({ solid = false }) => {
   const [isOpen, setIsOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
-  const [activeHash, setActiveHash] = useState<string>(
-    typeof window !== 'undefined' ? window.location.hash : ''
+  // 現在のパス（+フラグメント）を追跡してアクティブ表示に反映
+  const [activePath, setActivePath] = useState<string>(
+    typeof window !== 'undefined' ? window.location.pathname + window.location.hash : '/'
   );
   const navRef = useRef<HTMLElement>(null);
 
@@ -25,12 +24,16 @@ export const Navigation: React.FC<NavigationProps> = ({ solid = false }) => {
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
-  // 現在のページ（hash）を追跡してアクティブ表示に反映
+  // 現在のページ（パス）を追跡してアクティブ表示に反映
   useEffect(() => {
-    const handleHash = () => setActiveHash(window.location.hash);
-    handleHash();
-    window.addEventListener('hashchange', handleHash);
-    return () => window.removeEventListener('hashchange', handleHash);
+    const update = () => setActivePath(window.location.pathname + window.location.hash);
+    update();
+    window.addEventListener('popstate', update);
+    window.addEventListener('hashchange', update);
+    return () => {
+      window.removeEventListener('popstate', update);
+      window.removeEventListener('hashchange', update);
+    };
   }, []);
 
   // Lock body scroll when mobile menu is open
@@ -42,9 +45,13 @@ export const Navigation: React.FC<NavigationProps> = ({ solid = false }) => {
   // サブページ、またはスクロール時はソリッド表示
   const solidBar = solid || scrolled;
 
-  // 各メニューがアクティブか（TOPはトップページのヒーロー相当のとき）
-  const isItemActive = (href: string) =>
-    href === '#hero' ? HOME_HASHES.includes(activeHash) : activeHash === href;
+  // 各メニューがアクティブか。'/' はトップ、'/#section' は同一パス比較、
+  // '/company' 等は配下（/news/xxx など）も含めてアクティブ扱い。
+  const isItemActive = (href: string) => {
+    if (href === '/') return activePath === '/' || activePath === '/#hero';
+    if (href.startsWith('/#')) return activePath === href;
+    return activePath === href || activePath.startsWith(href + '/');
+  };
 
   // Filter nav items for desktop — skip "TOP"（ロゴがTOPの役割）
   const desktopNavItems = NAV_ITEMS.filter(item => item.label !== 'TOP');
@@ -81,7 +88,7 @@ export const Navigation: React.FC<NavigationProps> = ({ solid = false }) => {
 
           {/* ──── Logo（クリックでトップページへ） ──── */}
           <a
-            href="#hero"
+            href="/"
             className="relative z-50 flex items-center gap-3 group"
             aria-label="トップページへ"
           >
@@ -158,7 +165,7 @@ export const Navigation: React.FC<NavigationProps> = ({ solid = false }) => {
 
             {/* CTA */}
             <a
-              href="#locations"
+              href="/#locations"
               className="flex items-center gap-2 px-5 py-2 border transition-all duration-300 group"
               style={{
                 borderColor: 'rgba(180, 83, 9, 0.5)',
@@ -310,7 +317,7 @@ export const Navigation: React.FC<NavigationProps> = ({ solid = false }) => {
                 style={{ borderTop: '1px solid rgba(180, 83, 9, 0.2)' }}
               >
                 <a
-                  href="#locations"
+                  href="/#locations"
                   className="flex items-center gap-3 mb-5 group"
                   onClick={() => setIsOpen(false)}
                 >

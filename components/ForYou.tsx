@@ -44,7 +44,7 @@ export const ForYou: React.FC = () => {
                 <li>・介護食としても好評</li>
               </ul>
               <a
-                href="#consumer"
+                href="/consumer"
                 className="bg-white text-brand-dark px-8 py-3 rounded-full hover:bg-brand-gold hover:text-white transition-all font-serif text-sm inline-block"
               >
                 個人向け商品を見る
@@ -80,7 +80,7 @@ export const ForYou: React.FC = () => {
                 <li>・福利厚生プラン</li>
               </ul>
               <a
-                href="#corporate"
+                href="/corporate"
                 className="bg-white text-brand-dark px-8 py-3 rounded-full hover:bg-brand-gold hover:text-white transition-all font-serif text-sm inline-block"
               >
                 法人向けサービスを見る

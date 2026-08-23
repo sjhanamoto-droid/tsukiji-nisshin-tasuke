@@ -52,7 +52,7 @@ export const About: React.FC = () => {
               </p>
             </div>
             <a
-              href="#company"
+              href="/company"
               className="inline-block px-8 py-3 border border-brand-dark text-brand-dark hover:bg-brand-dark hover:text-white transition-colors duration-300 rounded-sm font-serif"
             >
               会社概要を見る

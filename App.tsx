@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useEffect } from 'react';
 import { Navigation } from './components/Navigation';
 import { Hero } from './components/Hero';
 import { InstagramSection } from './components/InstagramSection';
@@ -19,81 +19,69 @@ import { YochanPage } from './components/YochanPage';
 import { NewsPage } from './components/NewsPage';
 import { NewsListPage } from './components/NewsListPage';
 import { ShopPage } from './components/ShopPage';
+import { useRoute, navigate, scrollToTarget, PageView } from './lib/router';
+import { SHOPS, NEWS, COLUMNS } from './constants';
 
-type PageView =
-  | { type: 'home' }
-  | { type: 'article'; id: string }
-  | { type: 'news'; id: string }
-  | { type: 'newslist'; page: number }
-  | { type: 'shop'; id: string }
-  | { type: 'consumer' }
-  | { type: 'corporate' }
-  | { type: 'company' }
-  | { type: 'yochan' };
+const SITE_SUFFIX = ' | 築地にっしん太助';
+const BASE_TITLE = '築地にっしん太助 | 築地場外市場のうなぎ専門店';
+
+// 各ルートの <title>（SEO：ページごとに一意なタイトルを付ける）
+function titleFor(page: PageView): string {
+  switch (page.type) {
+    case 'company': return '会社案内' + SITE_SUFFIX;
+    case 'consumer': return '個人のお客様へ' + SITE_SUFFIX;
+    case 'corporate': return '法人のお客様へ' + SITE_SUFFIX;
+    case 'yochan': return 'ようちゃんとは' + SITE_SUFFIX;
+    case 'newslist': return 'お知らせ一覧' + SITE_SUFFIX;
+    case 'news': {
+      const n = NEWS.find(x => x.id === page.id);
+      return (n ? n.title : 'お知らせ') + SITE_SUFFIX;
+    }
+    case 'article': {
+      const c = COLUMNS.find(x => x.id === page.id);
+      return (c ? c.title : 'コラム') + SITE_SUFFIX;
+    }
+    case 'shop': {
+      const s = SHOPS.find(x => x.id === page.id);
+      return (s ? s.name : '店舗案内') + SITE_SUFFIX;
+    }
+    default: return BASE_TITLE;
+  }
+}
 
 function App() {
-  const [page, setPage] = useState<PageView>({ type: 'home' });
+  const page = useRoute();
 
+  // 内部リンク（/... で始まる <a>）をクライアントサイド遷移に変換する。
+  // これにより各コンポーネントの <a href="/company"> 等をそのまま SPA 遷移にできる。
   useEffect(() => {
-    const handleHash = () => {
-      const hash = window.location.hash;
-
-      const articleMatch = hash.match(/^#article\/(.+)$/);
-      if (articleMatch) {
-        setPage({ type: 'article', id: articleMatch[1] });
-        return;
-      }
-
-      const newsMatch = hash.match(/^#news\/(.+)$/);
-      if (newsMatch) {
-        setPage({ type: 'news', id: newsMatch[1] });
-        return;
-      }
-
-      const newslistPageMatch = hash.match(/^#newslist\/(\d+)$/);
-      if (newslistPageMatch) {
-        setPage({ type: 'newslist', page: parseInt(newslistPageMatch[1], 10) });
-        return;
-      }
-
-      if (hash === '#newslist') {
-        setPage({ type: 'newslist', page: 1 });
-        return;
-      }
-
-      const shopMatch = hash.match(/^#shop\/(.+)$/);
-      if (shopMatch) {
-        setPage({ type: 'shop', id: shopMatch[1] });
-        return;
-      }
-
-      if (hash === '#consumer') {
-        setPage({ type: 'consumer' });
-        return;
-      }
-
-      if (hash === '#corporate') {
-        setPage({ type: 'corporate' });
-        return;
-      }
-
-      if (hash === '#company') {
-        setPage({ type: 'company' });
-        return;
-      }
-
-      if (hash === '#yochan') {
-        setPage({ type: 'yochan' });
-        return;
-      }
-
-      setPage({ type: 'home' });
+    const onClick = (e: MouseEvent) => {
+      if (e.defaultPrevented || e.button !== 0 || e.metaKey || e.ctrlKey || e.shiftKey || e.altKey) return;
+      const a = (e.target as HTMLElement).closest('a');
+      if (!a) return;
+      const href = a.getAttribute('href');
+      const target = a.getAttribute('target');
+      if (!href || !href.startsWith('/') || target === '_blank' || a.hasAttribute('download')) return;
+      e.preventDefault();
+      navigate(href);
     };
-
-    handleHash();
-    window.addEventListener('hashchange', handleHash);
-    return () => window.removeEventListener('hashchange', handleHash);
+    document.addEventListener('click', onClick);
+    return () => document.removeEventListener('click', onClick);
   }, []);
+
+  // 初回ロード時、URL にフラグメントがあればその位置へスクロール
+  useEffect(() => {
+    if (window.location.hash) scrollToTarget(window.location.hash);
+  }, []);
+
+  // ルートが変わるたびに <title> と canonical を更新（SEO）
+  useEffect(() => {
+    document.title = titleFor(page);
+    const canonical = document.querySelector('link[rel="canonical"]');
+    if (canonical) {
+      canonical.setAttribute('href', window.location.origin + window.location.pathname);
+    }
+  }, [page]);
 
   // 各ビューの本文。共通ヘッダー/フッターは下の Chrome で常に描画する。
   const renderContent = () => {
@@ -102,52 +90,52 @@ function App() {
         return (
           <ArticlePage
             articleId={page.id}
-            onBack={() => { window.location.hash = '#column'; }}
+            onBack={() => navigate('/#column')}
           />
         );
       case 'consumer':
         return (
           <ConsumerPage
-            onBack={() => { window.location.hash = '#foryou'; }}
+            onBack={() => navigate('/#foryou')}
           />
         );
       case 'corporate':
         return (
           <CorporatePage
-            onBack={() => { window.location.hash = '#foryou'; }}
+            onBack={() => navigate('/#foryou')}
           />
         );
       case 'company':
         return (
           <CompanyPage
-            onBack={() => { window.location.hash = '#about'; }}
+            onBack={() => navigate('/#about')}
           />
         );
       case 'newslist':
         return (
           <NewsListPage
             page={page.page}
-            onBack={() => { window.location.hash = '#news'; }}
+            onBack={() => navigate('/#news')}
           />
         );
       case 'news':
         return (
           <NewsPage
             newsId={page.id}
-            onBack={() => { window.location.hash = '#newslist'; }}
+            onBack={() => navigate('/news')}
           />
         );
       case 'shop':
         return (
           <ShopPage
             shopId={page.id}
-            onBack={() => { window.location.hash = '#locations'; }}
+            onBack={() => navigate('/#locations')}
           />
         );
       case 'yochan':
         return (
           <YochanPage
-            onBack={() => { window.location.hash = '#story'; }}
+            onBack={() => navigate('/#story')}
           />
         );
       case 'home':

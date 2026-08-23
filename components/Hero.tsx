@@ -146,7 +146,7 @@ export const Hero: React.FC = () => {
                 築地うなぎ食堂の味を、ぜひ一度ご堪能ください。
               </p>
               <a
-                href="#locations"
+                href="/#locations"
                 className="inline-flex items-center gap-2 px-6 py-3 text-[13px] tracking-wider transition-all duration-300"
                 style={{
                   border: '1px solid rgba(180,83,9,0.5)',

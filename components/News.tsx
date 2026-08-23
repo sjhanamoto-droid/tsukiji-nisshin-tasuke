@@ -27,7 +27,7 @@ export const News: React.FC = () => {
             {items.map((item, index) => (
               <a
                 key={item.id || index}
-                href={`#news/${item.id}`}
+                href={`/news/${item.id}`}
                 className="block py-6 flex flex-col md:flex-row md:items-center group cursor-pointer no-underline"
               >
                 <div className="flex items-center mb-2 md:mb-0 md:w-48 shrink-0">
@@ -47,7 +47,7 @@ export const News: React.FC = () => {
         )}
 
         <div className="text-center mt-12">
-           <a href="#newslist" className="text-sm border-b border-brand-dark pb-1 hover:text-brand-gold hover:border-brand-gold transition-colors">お知らせ一覧を見る</a>
+           <a href="/news" className="text-sm border-b border-brand-dark pb-1 hover:text-brand-gold hover:border-brand-gold transition-colors">お知らせ一覧を見る</a>
         </div>
       </div>
     </Section>

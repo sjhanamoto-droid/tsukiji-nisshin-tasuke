@@ -1,5 +1,6 @@
 import React from 'react';
 import { Section } from './Section';
+import { navigate } from '../lib/router';
 import { COLUMNS } from '../constants';
 import { LoadingSpinner } from './LoadingSpinner';
 import { isMicroCMSConfigured, getColumnsList } from '../lib/microcms';
@@ -38,7 +39,7 @@ export const Column: React.FC = () => {
                   whileInView={{ opacity: 1, y: 0 }}
                   viewport={{ once: true }}
                   transition={{ delay: idx * 0.1 }}
-                  onClick={() => { window.location.hash = `#article/${column.id}`; }}
+                  onClick={() => navigate(`/column/${column.id}`)}
               >
                   <div className="aspect-[16/10] overflow-hidden rounded-sm mb-4">
                       <img
