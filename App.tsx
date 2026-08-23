@@ -34,6 +34,17 @@ function upsertMetaByName(name: string, content: string) {
   el.setAttribute('content', content);
 }
 
+// <meta property="..."> (OGP用) を無ければ作成し、あれば更新する
+function upsertMetaByProperty(property: string, content: string) {
+  let el = document.head.querySelector<HTMLMetaElement>(`meta[property="${property}"]`);
+  if (!el) {
+    el = document.createElement('meta');
+    el.setAttribute('property', property);
+    document.head.appendChild(el);
+  }
+  el.setAttribute('content', content);
+}
+
 // ルート別の JSON-LD を <script id="route-jsonld"> に反映（空なら削除）
 function setRouteJsonLd(data: { '@graph': object[] }) {
   const existing = document.getElementById('route-jsonld');
@@ -75,14 +86,25 @@ function App() {
     if (window.location.hash) scrollToTarget(window.location.hash);
   }, []);
 
-  // ルートが変わるたびに <title> / description / canonical / JSON-LD を更新（SEO）
+  // ルートが変わるたびに <title> / description / canonical / OGP / JSON-LD を更新（SEO）
   useEffect(() => {
-    document.title = titleFor(page);
-    upsertMetaByName('description', descriptionFor(page));
+    const title = titleFor(page);
+    const description = descriptionFor(page);
+    const url = window.location.origin + window.location.pathname;
+
+    document.title = title;
+    upsertMetaByName('description', description);
+
     const canonical = document.querySelector('link[rel="canonical"]');
-    if (canonical) {
-      canonical.setAttribute('href', window.location.origin + window.location.pathname);
-    }
+    if (canonical) canonical.setAttribute('href', url);
+
+    // OGP / Twitter Card をページ内容に合わせて更新（画像はサイト共通の静的OG画像を使用）
+    upsertMetaByProperty('og:url', url);
+    upsertMetaByProperty('og:title', title);
+    upsertMetaByProperty('og:description', description);
+    upsertMetaByName('twitter:title', title);
+    upsertMetaByName('twitter:description', description);
+
     setRouteJsonLd(jsonLdFor(page));
   }, [page]);
 

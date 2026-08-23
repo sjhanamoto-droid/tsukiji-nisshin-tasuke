@@ -17,8 +17,8 @@ export const Footer: React.FC = () => {
               場外市場内
             </address>
             <div className="flex gap-4">
-              <a href="#" className="text-gray-400 hover:text-white transition-colors">Instagram</a>
-              <a href="#" className="text-gray-400 hover:text-white transition-colors">Facebook</a>
+              <a href="https://www.instagram.com/tsukijiunagi/" target="_blank" rel="noopener noreferrer" className="text-gray-400 hover:text-white transition-colors">Instagram</a>
+              <a href="https://www.facebook.com/tsukijidelivery/" target="_blank" rel="noopener noreferrer" className="text-gray-400 hover:text-white transition-colors">Facebook</a>
             </div>
           </div>
 
