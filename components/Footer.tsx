@@ -31,8 +31,7 @@ export const Footer: React.FC = () => {
                   <a href={item.href} className="hover:text-brand-gold transition-colors">{item.label}</a>
                 </li>
               ))}
-              <li><a href="#" className="hover:text-brand-gold transition-colors">プライバシーポリシー</a></li>
-              <li><a href="#" className="hover:text-brand-gold transition-colors">特定商取引法に基づく表示</a></li>
+              <li><a href="/privacy-policy" className="hover:text-brand-gold transition-colors">プライバシーポリシー</a></li>
             </ul>
           </div>
 

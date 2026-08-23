@@ -19,6 +19,7 @@ import { YochanPage } from './components/YochanPage';
 import { NewsPage } from './components/NewsPage';
 import { NewsListPage } from './components/NewsListPage';
 import { ShopPage } from './components/ShopPage';
+import { PrivacyPolicyPage } from './components/PrivacyPolicyPage';
 import { useRoute, navigate, scrollToTarget } from './lib/router';
 import { titleFor, descriptionFor, jsonLdFor } from './lib/seo';
 
@@ -138,6 +139,12 @@ function App() {
         return (
           <YochanPage
             onBack={() => navigate('/#story')}
+          />
+        );
+      case 'privacy':
+        return (
+          <PrivacyPolicyPage
+            onBack={() => navigate('/')}
           />
         );
       case 'home':

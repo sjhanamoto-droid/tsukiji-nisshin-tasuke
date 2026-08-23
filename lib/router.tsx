@@ -11,7 +11,8 @@ export type PageView =
   | { type: 'consumer' }
   | { type: 'corporate' }
   | { type: 'company' }
-  | { type: 'yochan' };
+  | { type: 'yochan' }
+  | { type: 'privacy' };
 
 // pathname を PageView へ変換する（判定順が重要）
 export function parseRoute(pathname: string): PageView {
@@ -33,6 +34,7 @@ export function parseRoute(pathname: string): PageView {
   if (pathname === '/consumer') return { type: 'consumer' };
   if (pathname === '/corporate') return { type: 'corporate' };
   if (pathname === '/yochan') return { type: 'yochan' };
+  if (pathname === '/privacy-policy') return { type: 'privacy' };
 
   return { type: 'home' };
 }

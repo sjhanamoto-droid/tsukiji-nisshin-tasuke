@@ -25,6 +25,7 @@ export function titleFor(page: PageView): string {
     case 'consumer': return '個人のお客様へ' + SUFFIX;
     case 'corporate': return '法人のお客様へ' + SUFFIX;
     case 'yochan': return 'ようちゃんとは' + SUFFIX;
+    case 'privacy': return '個人情報保護方針' + SUFFIX;
     case 'newslist': return 'お知らせ一覧' + SUFFIX;
     case 'news': {
       const n = NEWS.find(x => x.id === page.id);
@@ -53,6 +54,8 @@ export function descriptionFor(page: PageView): string {
       return '法人のお客様へ。会議・イベント・接待に、特許取得のJetChef加熱容器で電子レンジ不要のあたたかいうなぎ弁当をお届け。ケータリング・大口注文に対応します。';
     case 'yochan':
       return '「ようちゃん」とは — 築地にっしん太助のうなぎに込めた想いと物語。看板商品 YO CHAN BENTO の由来をご紹介します。';
+    case 'privacy':
+      return '築地にっしん太助（有限会社築地にっしん太助）の個人情報保護方針。お客さまの個人情報の管理・利用目的・第三者提供・安全対策・開示請求についてご案内します。';
     case 'newslist':
       return '築地にっしん太助からのお知らせ・最新情報の一覧。営業時間、イベント、特許・商標などの最新ニュースをご覧いただけます。';
     case 'news': {
