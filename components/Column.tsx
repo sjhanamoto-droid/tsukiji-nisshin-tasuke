@@ -10,8 +10,8 @@ import { motion } from 'framer-motion';
 export const Column: React.FC = () => {
   const { data } = useFetch(() => fetchColumnList(), []);
 
-  // CMS(DB)取得を優先。未取得の間・失敗時はハードコード（seed済みと同一）を表示。
-  const items = data ?? COLUMNS;
+  // CMS(DB)取得を優先。未取得・空・失敗時はハードコード（seed済みと同一）を表示。
+  const items = data && data.length ? data : COLUMNS;
   const showSpinner = false;
 
   return (

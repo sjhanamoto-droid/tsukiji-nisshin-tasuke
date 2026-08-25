@@ -22,8 +22,8 @@ const fallbackNews: NewsItem[] = Object.values(NEWS_ARTICLES)
 export const NewsListPage: React.FC<NewsListPageProps> = ({ page, onBack }) => {
   const { data, loading, error } = useFetch(() => fetchNewsList(), []);
 
-  // CMS(DB)取得を優先、失敗時はハードコードにフォールバック。ページングはクライアント側で実施。
-  const all: NewsItem[] = data ?? (loading && !error ? [] : fallbackNews);
+  // CMS(DB)取得を優先、空・失敗時はハードコードにフォールバック。ページングはクライアント側で実施。
+  const all: NewsItem[] = (data && data.length) ? data : (loading && !error ? [] : fallbackNews);
   const totalPages = Math.max(1, Math.ceil(all.length / PER_PAGE));
   const currentPage = Math.max(1, Math.min(page, totalPages));
   const pageItems = all.slice((currentPage - 1) * PER_PAGE, currentPage * PER_PAGE);

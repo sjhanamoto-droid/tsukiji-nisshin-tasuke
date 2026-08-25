@@ -8,8 +8,8 @@ import { fetchNewsList } from '../lib/cms';
 export const News: React.FC = () => {
   const { data } = useFetch(() => fetchNewsList(), []);
 
-  // CMS(DB)取得を優先。未取得の間・失敗時はハードコード（seed済みと同一）を表示。
-  const items = (data ?? NEWS).slice(0, 4);
+  // CMS(DB)取得を優先。未取得・空・失敗時はハードコード（seed済みと同一）を表示。
+  const items = (data && data.length ? data : NEWS).slice(0, 4);
   const showSpinner = false;
 
   return (
