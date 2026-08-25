@@ -1,8 +1,8 @@
 // ニュース：個別取得（公開）／更新（要認証）／削除（要認証）。
 import type { VercelRequest, VercelResponse } from '@vercel/node';
-import { sql } from '../_lib/db';
-import { requireAuth } from '../_lib/auth';
-import { cleanText, cleanHtml, cleanUrl } from '../_lib/sanitize';
+import { sql } from '../_lib/db.js';
+import { requireAuth } from '../_lib/auth.js';
+import { cleanText, cleanHtml, cleanUrl } from '../_lib/sanitize.js';
 
 function rowToNews(r: any) {
   return {

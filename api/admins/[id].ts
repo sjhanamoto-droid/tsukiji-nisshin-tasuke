@@ -1,7 +1,7 @@
 // 管理者の削除。最後の1人は削除不可（ロックアウト防止）。
 import type { VercelRequest, VercelResponse } from '@vercel/node';
-import { sql, adminCount } from '../_lib/db';
-import { requireAuth } from '../_lib/auth';
+import { sql, adminCount } from '../_lib/db.js';
+import { requireAuth } from '../_lib/auth.js';
 
 export default async function handler(req: VercelRequest, res: VercelResponse) {
   if (!(await requireAuth(req, res))) return;

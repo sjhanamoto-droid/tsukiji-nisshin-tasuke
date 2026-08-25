@@ -1,6 +1,6 @@
 // 既存のハードコード内容（ニュース4・コラム2）をDBへ移行する初期データ。
 // setup（初回セットアップ）時に、テーブルが空のときだけ投入する。
-import { sql } from './db';
+import { sql } from './db.js';
 
 function esc(s: string): string {
   return s.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');

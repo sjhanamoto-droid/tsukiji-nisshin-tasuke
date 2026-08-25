@@ -1,8 +1,8 @@
 // ログイン：メール＋パスワードを検証し、セッションcookieを発行する。
 import type { VercelRequest, VercelResponse } from '@vercel/node';
-import { sql } from '../_lib/db';
-import { verifyPassword, createToken, setSessionCookie } from '../_lib/auth';
-import { cleanText } from '../_lib/sanitize';
+import { sql } from '../_lib/db.js';
+import { verifyPassword, createToken, setSessionCookie } from '../_lib/auth.js';
+import { cleanText } from '../_lib/sanitize.js';
 
 export default async function handler(req: VercelRequest, res: VercelResponse) {
   if (req.method !== 'POST') return res.status(405).json({ error: 'method_not_allowed' });

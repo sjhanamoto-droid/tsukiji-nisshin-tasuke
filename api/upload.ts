@@ -2,7 +2,7 @@
 // クライアントは @vercel/blob/client の upload() を使い、認証は onBeforeGenerateToken で確認。
 import type { VercelRequest, VercelResponse } from '@vercel/node';
 import { handleUpload, type HandleUploadBody } from '@vercel/blob/client';
-import { getSession } from './_lib/auth';
+import { getSession } from './_lib/auth.js';
 
 export default async function handler(req: VercelRequest, res: VercelResponse) {
   if (req.method !== 'POST') return res.status(405).json({ error: 'method_not_allowed' });

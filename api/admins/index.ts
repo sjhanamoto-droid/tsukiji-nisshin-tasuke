@@ -1,8 +1,8 @@
 // 管理者の一覧取得・新規作成（全員同権限：ログインしていれば誰でも追加できる）。
 import type { VercelRequest, VercelResponse } from '@vercel/node';
-import { sql } from '../_lib/db';
-import { requireAuth, hashPassword } from '../_lib/auth';
-import { cleanText } from '../_lib/sanitize';
+import { sql } from '../_lib/db.js';
+import { requireAuth, hashPassword } from '../_lib/auth.js';
+import { cleanText } from '../_lib/sanitize.js';
 
 export default async function handler(req: VercelRequest, res: VercelResponse) {
   if (!(await requireAuth(req, res))) return;

@@ -1,9 +1,9 @@
 // 初回セットアップ：管理者が0人のときのみ、SETUP_TOKEN 認証で最初の管理者を作成する。
 import type { VercelRequest, VercelResponse } from '@vercel/node';
-import { ensureSchema, adminCount, sql } from './_lib/db';
-import { hashPassword } from './_lib/auth';
-import { cleanText } from './_lib/sanitize';
-import { seedIfEmpty } from './_lib/seed';
+import { ensureSchema, adminCount, sql } from './_lib/db.js';
+import { hashPassword } from './_lib/auth.js';
+import { cleanText } from './_lib/sanitize.js';
+import { seedIfEmpty } from './_lib/seed.js';
 
 export default async function handler(req: VercelRequest, res: VercelResponse) {
   await ensureSchema();

@@ -1,6 +1,6 @@
 // 現在のログイン状態を返す（管理画面の認証ガード用）。
 import type { VercelRequest, VercelResponse } from '@vercel/node';
-import { getSession } from '../_lib/auth';
+import { getSession } from '../_lib/auth.js';
 
 export default async function handler(req: VercelRequest, res: VercelResponse) {
   const session = await getSession(req);

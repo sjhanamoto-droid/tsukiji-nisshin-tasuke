@@ -1,8 +1,8 @@
 // コラム：一覧取得（公開）／新規作成（要認証）。
 import type { VercelRequest, VercelResponse } from '@vercel/node';
-import { sql, genId } from '../_lib/db';
-import { requireAuth } from '../_lib/auth';
-import { cleanText, cleanHtml, cleanUrl } from '../_lib/sanitize';
+import { sql, genId } from '../_lib/db.js';
+import { requireAuth } from '../_lib/auth.js';
+import { cleanText, cleanHtml, cleanUrl } from '../_lib/sanitize.js';
 
 function rowToColumn(r: any) {
   return {
