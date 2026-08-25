@@ -3,9 +3,8 @@ import { ArrowLeft } from 'lucide-react';
 import { motion } from 'framer-motion';
 import { NEWS_ARTICLES } from '../newsData';
 import { LoadingSpinner } from './LoadingSpinner';
-import { isMicroCMSConfigured, getNewsDetail } from '../lib/microcms';
 import { useFetch } from '../lib/useMicroCMS';
-import { toNewsArticle } from '../lib/transforms';
+import { fetchNewsDetail } from '../lib/cms';
 import type { NewsArticleWithHtml } from '../lib/transforms';
 
 interface NewsPageProps {
@@ -14,21 +13,16 @@ interface NewsPageProps {
 }
 
 export const NewsPage: React.FC<NewsPageProps> = ({ newsId, onBack }) => {
-  const { data: cmsData, loading, error } = useFetch(
-    () => (isMicroCMSConfigured ? getNewsDetail(newsId) : Promise.reject('not configured')),
-    [newsId],
-  );
+  const { data: cmsData, loading, error } = useFetch(() => fetchNewsDetail(newsId), [newsId]);
 
-  // CMS data or fallback to hardcoded
-  const article: NewsArticleWithHtml | null = cmsData
-    ? toNewsArticle(cmsData)
-    : (!loading || error ? (NEWS_ARTICLES[newsId] ?? null) : null);
+  // CMS(DB)取得を優先、失敗時はハードコードにフォールバック
+  const article: NewsArticleWithHtml | null = cmsData ?? (!loading || error ? (NEWS_ARTICLES[newsId] ?? null) : null);
 
   useEffect(() => {
     window.scrollTo(0, 0);
   }, [newsId]);
 
-  if (loading && isMicroCMSConfigured) {
+  if (loading && !cmsData) {
     return (
       <div className="min-h-screen bg-brand-cream">
         {/* ヘッダーはサイト共通の <Navigation />（App.tsx）を使用 */}

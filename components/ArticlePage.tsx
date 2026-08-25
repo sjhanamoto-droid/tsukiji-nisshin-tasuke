@@ -3,9 +3,8 @@ import { ArrowLeft } from 'lucide-react';
 import { motion } from 'framer-motion';
 import { ARTICLES } from '../articles';
 import { LoadingSpinner } from './LoadingSpinner';
-import { isMicroCMSConfigured, getColumnDetail } from '../lib/microcms';
 import { useFetch } from '../lib/useMicroCMS';
-import { toArticle } from '../lib/transforms';
+import { fetchColumnDetail } from '../lib/cms';
 import type { ArticleWithHtml, ArticleSectionWithHtml } from '../lib/transforms';
 
 interface ArticlePageProps {
@@ -14,20 +13,16 @@ interface ArticlePageProps {
 }
 
 export const ArticlePage: React.FC<ArticlePageProps> = ({ articleId, onBack }) => {
-  const { data: cmsData, loading, error } = useFetch(
-    () => (isMicroCMSConfigured ? getColumnDetail(articleId) : Promise.reject('not configured')),
-    [articleId],
-  );
+  const { data: cmsData, loading, error } = useFetch(() => fetchColumnDetail(articleId), [articleId]);
 
-  const article: ArticleWithHtml | null = cmsData
-    ? toArticle(cmsData)
-    : (!loading || error ? (ARTICLES[articleId] ?? null) : null);
+  // CMS(DB)取得を優先、失敗時はハードコードにフォールバック
+  const article: ArticleWithHtml | null = cmsData ?? (!loading || error ? (ARTICLES[articleId] ?? null) : null);
 
   useEffect(() => {
     window.scrollTo(0, 0);
   }, [articleId]);
 
-  if (loading && isMicroCMSConfigured) {
+  if (loading && !cmsData) {
     return (
       <div className="min-h-screen bg-brand-cream">
         {/* ヘッダーはサイト共通の <Navigation />（App.tsx）を使用 */}

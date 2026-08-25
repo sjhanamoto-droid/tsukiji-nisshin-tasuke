@@ -3,9 +3,8 @@ import { ArrowLeft, ChevronRight } from 'lucide-react';
 import { motion } from 'framer-motion';
 import { NEWS_ARTICLES } from '../newsData';
 import { LoadingSpinner } from './LoadingSpinner';
-import { isMicroCMSConfigured, getNewsList } from '../lib/microcms';
 import { useFetch } from '../lib/useMicroCMS';
-import { toNewsItem } from '../lib/transforms';
+import { fetchNewsList } from '../lib/cms';
 import type { NewsItem } from '../types';
 
 interface NewsListPageProps {
@@ -21,30 +20,15 @@ const fallbackNews: NewsItem[] = Object.values(NEWS_ARTICLES)
   .map(n => ({ id: n.id, date: n.date, category: n.category, title: n.title }));
 
 export const NewsListPage: React.FC<NewsListPageProps> = ({ page, onBack }) => {
-  const offset = (Math.max(1, page) - 1) * PER_PAGE;
+  const { data, loading, error } = useFetch(() => fetchNewsList(), []);
 
-  const { data, loading, error } = useFetch(
-    () => (isMicroCMSConfigured ? getNewsList(PER_PAGE, offset) : Promise.reject('not configured')),
-    [page],
-  );
+  // CMS(DB)取得を優先、失敗時はハードコードにフォールバック。ページングはクライアント側で実施。
+  const all: NewsItem[] = data ?? (loading && !error ? [] : fallbackNews);
+  const totalPages = Math.max(1, Math.ceil(all.length / PER_PAGE));
+  const currentPage = Math.max(1, Math.min(page, totalPages));
+  const pageItems = all.slice((currentPage - 1) * PER_PAGE, currentPage * PER_PAGE);
 
-  // Derive items and pagination from CMS or fallback
-  let pageItems: NewsItem[];
-  let totalPages: number;
-  let currentPage: number;
-
-  if (data) {
-    pageItems = data.contents.map(toNewsItem);
-    totalPages = Math.ceil(data.totalCount / PER_PAGE);
-    currentPage = Math.max(1, Math.min(page, totalPages));
-  } else {
-    totalPages = Math.ceil(fallbackNews.length / PER_PAGE);
-    currentPage = Math.max(1, Math.min(page, totalPages));
-    const start = (currentPage - 1) * PER_PAGE;
-    pageItems = fallbackNews.slice(start, start + PER_PAGE);
-  }
-
-  const showSpinner = loading && isMicroCMSConfigured;
+  const showSpinner = loading && !data && !error;
 
   useEffect(() => {
     window.scrollTo(0, 0);

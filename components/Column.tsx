@@ -3,19 +3,16 @@ import { Section } from './Section';
 import { navigate } from '../lib/router';
 import { COLUMNS } from '../constants';
 import { LoadingSpinner } from './LoadingSpinner';
-import { isMicroCMSConfigured, getColumnsList } from '../lib/microcms';
 import { useFetch } from '../lib/useMicroCMS';
-import { toColumnItem } from '../lib/transforms';
+import { fetchColumnList } from '../lib/cms';
 import { motion } from 'framer-motion';
 
 export const Column: React.FC = () => {
-  const { data, loading, error } = useFetch(
-    () => (isMicroCMSConfigured ? getColumnsList(10) : Promise.reject('not configured')),
-    [],
-  );
+  const { data } = useFetch(() => fetchColumnList(), []);
 
-  const items = data ? data.contents.map(toColumnItem) : (loading && !error ? [] : COLUMNS);
-  const showSpinner = loading && isMicroCMSConfigured;
+  // CMS(DB)取得を優先。未取得の間・失敗時はハードコード（seed済みと同一）を表示。
+  const items = data ?? COLUMNS;
+  const showSpinner = false;
 
   return (
     <Section id="column" className="bg-brand-cream border-t border-brand-gold/10">

@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, lazy, Suspense } from 'react';
 import { Navigation } from './components/Navigation';
 import { Hero } from './components/Hero';
 import { InstagramSection } from './components/InstagramSection';
@@ -22,6 +22,9 @@ import { ShopPage } from './components/ShopPage';
 import { PrivacyPolicyPage } from './components/PrivacyPolicyPage';
 import { useRoute, navigate, scrollToTarget } from './lib/router';
 import { titleFor, descriptionFor, jsonLdFor } from './lib/seo';
+
+// 管理画面（/admin）は遅延読み込み（公開バンドルには含めない）
+const AdminApp = lazy(() => import('./components/admin/AdminApp'));
 
 // <meta name="..."> を無ければ作成し、あれば更新する
 function upsertMetaByName(name: string, content: string) {
@@ -63,6 +66,7 @@ function setRouteJsonLd(data: { '@graph': object[] }) {
 
 function App() {
   const page = useRoute();
+  const isAdmin = typeof window !== 'undefined' && window.location.pathname.startsWith('/admin');
 
   // 内部リンク（/... で始まる <a>）をクライアントサイド遷移に変換する。
   // これにより各コンポーネントの <a href="/company"> 等をそのまま SPA 遷移にできる。
@@ -88,6 +92,7 @@ function App() {
 
   // ルートが変わるたびに <title> / description / canonical / OGP / JSON-LD を更新（SEO）
   useEffect(() => {
+    if (window.location.pathname.startsWith('/admin')) return; // 管理画面は対象外
     const title = titleFor(page);
     const description = descriptionFor(page);
     const url = window.location.origin + window.location.pathname;
@@ -187,6 +192,15 @@ function App() {
         );
     }
   };
+
+  // 管理画面（/admin）は公開サイトの枠を使わず、専用アプリを表示
+  if (isAdmin) {
+    return (
+      <Suspense fallback={<div className="min-h-screen bg-gray-100" />}>
+        <AdminApp />
+      </Suspense>
+    );
+  }
 
   const isHome = page.type === 'home';
 

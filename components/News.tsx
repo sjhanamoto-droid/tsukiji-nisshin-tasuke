@@ -2,18 +2,15 @@ import React from 'react';
 import { Section } from './Section';
 import { NEWS } from '../constants';
 import { LoadingSpinner } from './LoadingSpinner';
-import { isMicroCMSConfigured, getNewsList } from '../lib/microcms';
 import { useFetch } from '../lib/useMicroCMS';
-import { toNewsItem } from '../lib/transforms';
+import { fetchNewsList } from '../lib/cms';
 
 export const News: React.FC = () => {
-  const { data, loading, error } = useFetch(
-    () => (isMicroCMSConfigured ? getNewsList(4) : Promise.reject('not configured')),
-    [],
-  );
+  const { data } = useFetch(() => fetchNewsList(), []);
 
-  const items = data ? data.contents.map(toNewsItem) : (loading && !error ? [] : NEWS);
-  const showSpinner = loading && isMicroCMSConfigured;
+  // CMS(DB)取得を優先。未取得の間・失敗時はハードコード（seed済みと同一）を表示。
+  const items = (data ?? NEWS).slice(0, 4);
+  const showSpinner = false;
 
   return (
     <Section id="news" className="bg-white">
