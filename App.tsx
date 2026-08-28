@@ -21,7 +21,7 @@ import { NewsListPage } from './components/NewsListPage';
 import { ShopPage } from './components/ShopPage';
 import { PrivacyPolicyPage } from './components/PrivacyPolicyPage';
 import { useRoute, navigate, scrollToTarget } from './lib/router';
-import { titleFor, descriptionFor, jsonLdFor } from './lib/seo';
+import { titleFor, descriptionFor, keywordsFor, jsonLdFor } from './lib/seo';
 
 // 管理画面（/admin）は遅延読み込み（公開バンドルには含めない）
 const AdminApp = lazy(() => import('./components/admin/AdminApp'));
@@ -99,6 +99,7 @@ function App() {
 
     document.title = title;
     upsertMetaByName('description', description);
+    upsertMetaByName('keywords', keywordsFor(page));
 
     const canonical = document.querySelector('link[rel="canonical"]');
     if (canonical) canonical.setAttribute('href', url);

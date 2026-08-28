@@ -24,7 +24,7 @@ export function titleFor(page: PageView): string {
     case 'company': return '会社案内' + SUFFIX;
     case 'consumer': return '個人のお客様へ' + SUFFIX;
     case 'corporate': return '法人のお客様へ' + SUFFIX;
-    case 'yochan': return 'ようちゃんとは' + SUFFIX;
+    case 'yochan': return 'ようちゃん（陽ちゃん）とは' + SUFFIX;
     case 'privacy': return '個人情報保護方針' + SUFFIX;
     case 'newslist': return 'お知らせ一覧' + SUFFIX;
     case 'news': {
@@ -39,7 +39,7 @@ export function titleFor(page: PageView): string {
       const s = SHOPS.find(x => x.id === page.id);
       return (s ? s.name : '店舗案内') + SUFFIX;
     }
-    default: return BRAND + ' | 築地場外市場のうなぎ専門店';
+    default: return '築地うなぎ食堂｜築地にっしん太助｜築地場外市場のうなぎ専門店';
   }
 }
 
@@ -53,7 +53,7 @@ export function descriptionFor(page: PageView): string {
     case 'corporate':
       return '法人のお客様へ。会議・イベント・接待に、特許取得のJetChef加熱容器で電子レンジ不要のあたたかいうなぎ弁当をお届け。ケータリング・大口注文に対応します。';
     case 'yochan':
-      return '「ようちゃん」とは — 築地にっしん太助のうなぎに込めた想いと物語。看板商品 YO CHAN BENTO の由来をご紹介します。';
+      return '「ようちゃん（陽ちゃん）」とは — 築地にっしん太助のうなぎに込めた想いと物語。看板キャラクター「築地の陽ちゃん」と看板商品 YO CHAN BENTO の由来をご紹介します。';
     case 'privacy':
       return '築地にっしん太助（有限会社築地にっしん太助）の個人情報保護方針。お客さまの個人情報の管理・利用目的・第三者提供・安全対策・開示請求についてご案内します。';
     case 'newslist':
@@ -76,6 +76,71 @@ export function descriptionFor(page: PageView): string {
     }
     default: return DEFAULT_DESC;
   }
+}
+
+// ──────────────── キーワード（meta keywords） ────────────────
+// Google のランキング要素ではないが、指定検索語での想起補助として各ページに付与する。
+const BASE_KW =
+  '築地うなぎ食堂,築地にっしん太助,有限会社築地にっしん太助,築地 うなぎ,築地うなぎ,うなぎ,金のうなぎ,築地場外市場,うな重,鰻,蒲焼き,JetChef,ジェットシェフ,陽ちゃん,ようちゃん,東京';
+
+export function keywordsFor(page: PageView): string {
+  switch (page.type) {
+    case 'company':
+      return '会社案内,会社概要,有限会社築地にっしん太助,' + BASE_KW;
+    case 'yochan':
+      return '陽ちゃん,築地の陽ちゃん,ようちゃん,YO-chan,YO CHAN BENTO,うなぎ弁当,' + BASE_KW;
+    case 'corporate':
+      return '法人のお客様,ケータリング,うなぎ弁当,JetChef,ジェットシェフ,会議,接待,イベント,' + BASE_KW;
+    case 'consumer':
+      return 'テイクアウト,デリバリー,お取り寄せ,ギフト,全国発送,' + BASE_KW;
+    case 'shop': {
+      const s = SHOPS.find(x => x.id === page.id);
+      return (s ? s.name + ',' + s.address + ',' : '') + BASE_KW;
+    }
+    default:
+      return BASE_KW;
+  }
+}
+
+// ──────────────── パンくずリスト（BreadcrumbList） ────────────────
+function breadcrumbLd(page: PageView): object | null {
+  const items: { name: string; url: string }[] = [{ name: 'ホーム', url: ORIGIN + '/' }];
+  const push = (name: string, path: string) => items.push({ name, url: ORIGIN + path });
+  switch (page.type) {
+    case 'company': push('会社案内', '/company'); break;
+    case 'consumer': push('個人のお客様へ', '/consumer'); break;
+    case 'corporate': push('法人のお客様へ', '/corporate'); break;
+    case 'yochan': push('ようちゃんとは', '/yochan'); break;
+    case 'privacy': push('個人情報保護方針', '/privacy-policy'); break;
+    case 'newslist': push('お知らせ', '/news'); break;
+    case 'news': {
+      push('お知らせ', '/news');
+      const n = NEWS.find(x => x.id === page.id);
+      if (n) push(n.title, '/news/' + n.id);
+      break;
+    }
+    case 'article': {
+      const c = COLUMNS.find(x => x.id === page.id);
+      if (c) push(c.title, '/column/' + c.id);
+      break;
+    }
+    case 'shop': {
+      const s = SHOPS.find(x => x.id === page.id);
+      if (s) push(s.name, '/shop/' + s.id);
+      break;
+    }
+    default: return null; // ホームはパンくず不要
+  }
+  if (items.length < 2) return null;
+  return {
+    '@type': 'BreadcrumbList',
+    itemListElement: items.map((it, i) => ({
+      '@type': 'ListItem',
+      position: i + 1,
+      name: it.name,
+      item: it.url,
+    })),
+  };
 }
 
 // ──────────────── JSON-LD 構造化データ ────────────────
@@ -132,5 +197,7 @@ export function jsonLdFor(page: PageView): { '@context': string; '@graph': objec
     const s = SHOPS.find(x => x.id === page.id);
     if (s) graph.push(restaurantLd(s));
   }
+  const bc = breadcrumbLd(page);
+  if (bc) graph.push(bc);
   return { '@context': 'https://schema.org', '@graph': graph };
 }
