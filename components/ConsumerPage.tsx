@@ -120,6 +120,8 @@ export const ConsumerPage: React.FC<ConsumerPageProps> = ({ onBack }) => {
                   src={choice.image}
                   alt={choice.title}
                   className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
+                  loading={idx === 0 ? 'eager' : 'lazy'}
+                  decoding="async"
                 />
                 {/* Gradient overlay — darkens bottom for text readability */}
                 <div

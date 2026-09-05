@@ -1,0 +1,5 @@
+/* Tailwind 本体。以前は cdn.tailwindcss.com がブラウザ上で生成していたものを、
+   ビルド時に必要なクラスだけ書き出すようにした（描画ブロックの解消）。 */
+@tailwind base;
+@tailwind components;
+@tailwind utilities;

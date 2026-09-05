@@ -6,6 +6,7 @@ import { LoadingSpinner } from './LoadingSpinner';
 import { useFetch } from '../lib/useMicroCMS';
 import { fetchColumnDetail } from '../lib/cms';
 import type { ArticleWithHtml, ArticleSectionWithHtml } from '../lib/transforms';
+import { applyDetailMeta, absoluteUrl, excerptFromHtml, setRobots } from '../lib/pageMeta';
 
 interface ArticlePageProps {
   articleId: string;
@@ -21,6 +22,24 @@ export const ArticlePage: React.FC<ArticlePageProps> = ({ articleId, onBack }) =
   useEffect(() => {
     window.scrollTo(0, 0);
   }, [articleId]);
+
+  // プリレンダ後に CMS へ追加されたコラムでも、描画後に正しいタイトル・説明文になるよう上書きする。
+  // 記事が存在しない URL は 200 を返してしまうため noindex を立ててソフト404を防ぐ。
+  useEffect(() => {
+    if (loading && !cmsData) return;
+    if (!article) {
+      setRobots(false);
+      return;
+    }
+    setRobots(true);
+    const lead = `${article.title}｜築地にっしん太助のコラム。`;
+    const body = article.sections.map(sec => excerptFromHtml(sec.htmlBody ?? '', 120)).find(Boolean) ?? '';
+    applyDetailMeta({
+      title: `${article.title} | 築地にっしん太助`,
+      description: (body ? `${lead}${body}` : lead).slice(0, 180),
+      image: article.coverImage ? absoluteUrl(article.coverImage) : undefined,
+    });
+  }, [article, loading, cmsData]);
 
   if (loading && !cmsData) {
     return (
@@ -52,6 +71,9 @@ export const ArticlePage: React.FC<ArticlePageProps> = ({ articleId, onBack }) =
           src={article.coverImage}
           alt={article.title}
           className="w-full h-full object-cover"
+          loading="eager"
+          decoding="async"
+          fetchPriority="high"
         />
         <div className="absolute inset-0 bg-gradient-to-t from-brand-cream via-transparent to-black/30" />
       </div>

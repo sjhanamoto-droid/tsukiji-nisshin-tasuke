@@ -126,9 +126,11 @@ export const GivingBack: React.FC = () => {
               }}
             />
             <img
-              src={assetUrl("/images/character/yochan06.png")}
+              src={assetUrl("/images/character/yochan06.webp")}
               alt="YO-chan — 鰻丼を届ける少年"
               className="relative z-10 w-48 md:w-56 lg:w-64 h-auto drop-shadow-2xl"
+              loading="lazy"
+              decoding="async"
             />
           </motion.div>
         </div>

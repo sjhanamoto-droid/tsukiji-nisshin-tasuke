@@ -14,6 +14,9 @@ export const Hero: React.FC = () => {
             src={assetUrl('/images/backgrounds/bg.jpg')}
             alt="Traditional Japanese Dining"
             className="w-full h-full object-cover opacity-60"
+            loading="eager"
+            decoding="async"
+            fetchPriority="high"
           />
           <div className="absolute inset-0 bg-gradient-to-b from-black/50 via-black/20 to-brand-dark/90"></div>
         </div>
@@ -25,19 +28,26 @@ export const Hero: React.FC = () => {
             transition={{ duration: 1, ease: "easeOut" }}
           >
             <img
-              src={assetUrl('/images/logo/logo-wh.png')}
+              src={assetUrl('/images/logo/logo-wh.webp')}
               alt="築地にっしん太助 ロゴ"
               className="mx-auto w-28 md:w-36 lg:w-44 h-auto mb-6"
               loading="eager"
               decoding="async"
             />
-            <h1 className="text-xl md:text-4xl lg:text-5xl font-serif font-bold text-white leading-tight mb-8">
+            <h1 className="font-serif font-bold text-white mb-6">
+              {/* キャッチコピー。見た目は従来どおり大きく表示する */}
+              <span className="block text-xl md:text-4xl lg:text-5xl leading-tight">
               誰でも、いつでも、どこでも。<br />
               温かい"食のよろこび"を届ける。
+              </span>
+              {/* 検索で使われる語（築地・うなぎ・専門店）を見出しに含める */}
+              <span className="block mt-7 text-[12px] md:text-base font-normal tracking-[0.18em] text-white/80">
+                築地場外市場のうなぎ専門店　築地うなぎ食堂
+              </span>
             </h1>
-            <h2 className="text-white text-base md:text-2xl font-serif tracking-widest mt-2">
+            <p className="text-white text-base md:text-2xl font-serif tracking-widest mt-2">
               築地にっしん太助
-            </h2>
+            </p>
           </motion.div>
         </div>
 

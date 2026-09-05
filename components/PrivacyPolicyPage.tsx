@@ -68,6 +68,9 @@ export const PrivacyPolicyPage: React.FC<PrivacyPolicyPageProps> = ({ onBack }) 
             src={assetUrl('/images/backgrounds/bg.jpg')}
             alt="築地にっしん太助"
             className="w-full h-full object-cover"
+            loading="eager"
+            decoding="async"
+            fetchPriority="high"
           />
           <div
             className="absolute inset-0"

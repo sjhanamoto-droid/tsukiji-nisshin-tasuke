@@ -46,6 +46,9 @@ export const ShopPage: React.FC<ShopPageProps> = ({ shopId, onBack }) => {
             src={shop.heroImage}
             alt={shop.name}
             className="w-full h-full object-cover"
+            loading="eager"
+            decoding="async"
+            fetchPriority="high"
           />
           <div
             className="absolute inset-0"

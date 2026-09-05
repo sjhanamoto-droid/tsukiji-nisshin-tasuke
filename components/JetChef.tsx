@@ -75,6 +75,8 @@ export const JetChef: React.FC = () => {
               alt="JetChef"
               className="h-8 md:h-10 lg:h-12 w-auto"
               style={{ filter: 'brightness(0) invert(1)' }}
+              loading="lazy"
+              decoding="async"
             />
           </motion.div>
 

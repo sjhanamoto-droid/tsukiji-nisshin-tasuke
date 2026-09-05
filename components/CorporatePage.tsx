@@ -106,6 +106,8 @@ export const CorporatePage: React.FC<CorporatePageProps> = ({ onBack }) => {
                   src={service.image}
                   alt={service.title}
                   className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
+                  loading={idx === 0 ? 'eager' : 'lazy'}
+                  decoding="async"
                 />
                 <div
                   className="absolute inset-0 transition-opacity duration-500"

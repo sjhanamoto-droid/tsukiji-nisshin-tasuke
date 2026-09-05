@@ -6,6 +6,7 @@ import { LoadingSpinner } from './LoadingSpinner';
 import { useFetch } from '../lib/useMicroCMS';
 import { fetchNewsDetail } from '../lib/cms';
 import type { NewsArticleWithHtml } from '../lib/transforms';
+import { applyDetailMeta, excerptFromHtml, setRobots } from '../lib/pageMeta';
 
 interface NewsPageProps {
   newsId: string;
@@ -21,6 +22,23 @@ export const NewsPage: React.FC<NewsPageProps> = ({ newsId, onBack }) => {
   useEffect(() => {
     window.scrollTo(0, 0);
   }, [newsId]);
+
+  // プリレンダ後に CMS へ追加された記事でも、描画後に正しいタイトル・説明文になるよう上書きする。
+  // 記事が存在しない URL は 200 を返してしまうため noindex を立ててソフト404を防ぐ。
+  useEffect(() => {
+    if (loading && !cmsData) return;
+    if (!article) {
+      setRobots(false);
+      return;
+    }
+    setRobots(true);
+    const lead = `${article.title}（${article.date}）｜築地場外市場のうなぎ専門店「築地にっしん太助」からのお知らせです。`;
+    const body = excerptFromHtml(article.htmlContent ?? '', 90);
+    applyDetailMeta({
+      title: `${article.title} | 築地にっしん太助`,
+      description: (body ? `${lead}${body}` : lead).slice(0, 180),
+    });
+  }, [article, loading, cmsData]);
 
   if (loading && !cmsData) {
     return (

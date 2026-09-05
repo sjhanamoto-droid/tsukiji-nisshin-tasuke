@@ -6,13 +6,14 @@ import { LoadingSpinner } from './LoadingSpinner';
 import { useFetch } from '../lib/useMicroCMS';
 import { fetchNewsList } from '../lib/cms';
 import type { NewsItem } from '../types';
+import { NEWS_PER_PAGE } from '../lib/seo';
 
 interface NewsListPageProps {
   page: number;
   onBack: () => void;
 }
 
-const PER_PAGE = 20;
+const PER_PAGE = NEWS_PER_PAGE;
 
 // Fallback: hardcoded data sorted by date descending
 const fallbackNews: NewsItem[] = Object.values(NEWS_ARTICLES)

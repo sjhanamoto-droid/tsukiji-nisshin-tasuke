@@ -25,10 +25,12 @@ export const Story: React.FC = () => {
                  }}
                />
                <img
-                src={assetUrl('/images/character/yochan01.png')}
+                src={assetUrl('/images/character/yochan01.webp')}
                 alt="YO-chan"
                 className="w-3/4 h-auto object-contain relative z-10"
                 style={{ filter: 'drop-shadow(0 12px 24px rgba(0,0,0,0.3))' }}
+                loading="lazy"
+                decoding="async"
               />
             </div>
           </motion.div>

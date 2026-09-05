@@ -21,10 +21,10 @@ const PROFILE = [
 ];
 
 const GALLERY_IMAGES = [
-  { src: assetUrl('/images/character/yochan02.png'), alt: 'YO-chan ポーズ2' },
-  { src: assetUrl('/images/character/yochan03.png'), alt: 'YO-chan ポーズ3' },
-  { src: assetUrl('/images/character/yochan04.png'), alt: 'YO-chan ポーズ4' },
-  { src: assetUrl('/images/character/yochan05.png'), alt: 'YO-chan ポーズ5' },
+  { src: assetUrl('/images/character/yochan02.webp'), alt: 'YO-chan ポーズ2' },
+  { src: assetUrl('/images/character/yochan03.webp'), alt: 'YO-chan ポーズ3' },
+  { src: assetUrl('/images/character/yochan04.webp'), alt: 'YO-chan ポーズ4' },
+  { src: assetUrl('/images/character/yochan05.webp'), alt: 'YO-chan ポーズ5' },
 ];
 
 export const YochanPage: React.FC<YochanPageProps> = ({ onBack }) => {
@@ -59,12 +59,15 @@ export const YochanPage: React.FC<YochanPageProps> = ({ onBack }) => {
             >
               <div className="relative">
                 <img
-                  src={assetUrl('/images/character/yochan01.png')}
+                  src={assetUrl('/images/character/yochan01.webp')}
                   alt="YO-chan"
                   className="w-48 md:w-64 lg:w-72 h-auto mx-auto"
                   style={{
                     filter: 'drop-shadow(0 20px 40px rgba(180,83,9,0.15))',
                   }}
+                  loading="eager"
+                  decoding="async"
+                  fetchPriority="high"
                 />
               </div>
             </motion.div>
@@ -245,12 +248,14 @@ export const YochanPage: React.FC<YochanPageProps> = ({ onBack }) => {
                   }}
                 />
                 <img
-                  src={assetUrl('/images/character/yochan06.png')}
+                  src={assetUrl('/images/character/yochan06.webp')}
                   alt="YO-chan — 鰻丼を届ける"
                   className="w-44 md:w-56 lg:w-64 h-auto relative z-10"
                   style={{
                     filter: 'drop-shadow(0 16px 32px rgba(180,83,9,0.12))',
                   }}
+                  loading="lazy"
+                  decoding="async"
                 />
               </div>
             </motion.div>
@@ -384,6 +389,8 @@ export const YochanPage: React.FC<YochanPageProps> = ({ onBack }) => {
                   style={{
                     filter: 'drop-shadow(0 8px 20px rgba(0,0,0,0.3))',
                   }}
+                  loading="lazy"
+                  decoding="async"
                 />
               </motion.div>
             ))}

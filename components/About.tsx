@@ -22,6 +22,8 @@ export const About: React.FC = () => {
                 src={assetUrl('/images/image19.jpg')}
                 alt="築地にっしん太助" 
                 className="w-full h-auto rounded-sm shadow-xl grayscale hover:grayscale-0 transition-all duration-700"
+                loading="lazy"
+                decoding="async"
               />
               <div className="absolute -bottom-4 -right-4 w-24 h-24 border-b-2 border-r-2 border-brand-gold opacity-50"></div>
             </div>

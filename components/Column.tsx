@@ -1,6 +1,5 @@
 import React from 'react';
 import { Section } from './Section';
-import { navigate } from '../lib/router';
 import { COLUMNS } from '../constants';
 import { LoadingSpinner } from './LoadingSpinner';
 import { useFetch } from '../lib/useMicroCMS';
@@ -31,19 +30,23 @@ export const Column: React.FC = () => {
             {items.map((column, idx) => (
               <motion.article
                   key={column.id}
-                  className="group cursor-pointer"
                   initial={{ opacity: 0, y: 20 }}
                   whileInView={{ opacity: 1, y: 0 }}
                   viewport={{ once: true }}
                   transition={{ delay: idx * 0.1 }}
-                  onClick={() => navigate(`/column/${column.id}`)}
               >
+                <a
+                  href={`/column/${column.id}`}
+                  className="group block focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-brand-gold"
+                >
                   <div className="aspect-[16/10] overflow-hidden rounded-sm mb-4">
                       <img
                           src={column.image}
                           alt={column.title}
                           className="w-full h-full object-cover transform group-hover:scale-105 transition-transform duration-500"
-                      />
+                          loading="lazy"
+                          decoding="async"
+                        />
                   </div>
                   <div className="flex items-center gap-3 mb-2 text-xs">
                       <span className="text-gray-500 font-mono">{column.date}</span>
@@ -54,6 +57,7 @@ export const Column: React.FC = () => {
                   <h3 className="text-lg font-serif font-bold text-brand-dark leading-snug group-hover:text-brand-gold transition-colors">
                       {column.title}
                   </h3>
+                </a>
               </motion.article>
             ))}
           </div>

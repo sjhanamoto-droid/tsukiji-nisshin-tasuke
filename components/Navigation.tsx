@@ -93,7 +93,7 @@ export const Navigation: React.FC<NavigationProps> = ({ solid = false }) => {
             aria-label="トップページへ"
           >
             <motion.img
-              src={assetUrl("/images/logo/logo-wh.png")}
+              src={assetUrl("/images/logo/logo-wh.webp")}
               alt="築地にっしん太助"
               className={`transition-all duration-500 ${
                 solidBar ? 'h-10 lg:h-11' : 'h-12 lg:h-14'
@@ -257,10 +257,12 @@ export const Navigation: React.FC<NavigationProps> = ({ solid = false }) => {
                 transition={{ delay: 0.15, duration: 0.4 }}
               >
                 <img
-                  src={assetUrl("/images/logo/logo-wh.png")}
+                  src={assetUrl("/images/logo/logo-wh.webp")}
                   alt="築地にっしん太助"
                   className="h-14"
                   style={{ filter: 'drop-shadow(0 2px 6px rgba(0,0,0,0.4))' }}
+                  loading="eager"
+                  decoding="async"
                 />
                 <div className="flex flex-col">
                   <span className="font-serif text-lg text-white tracking-wider">にっしん太助</span>

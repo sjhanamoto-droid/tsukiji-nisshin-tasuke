@@ -29,6 +29,8 @@ export const ForYou: React.FC = () => {
               src={assetUrl('/images/image14.jpg')} 
               alt="Family Dining" 
               className="w-full h-96 object-cover transform group-hover:scale-105 transition-transform duration-700"
+              loading="lazy"
+              decoding="async"
             />
             <div className="absolute inset-0 z-20 flex flex-col justify-center items-center text-white p-8 text-center">
               <Gift size={48} className="mb-4 text-brand-gold" />
@@ -65,6 +67,8 @@ export const ForYou: React.FC = () => {
               src={assetUrl('/images/image16.jpg')} 
               alt="Corporate Event" 
               className="w-full h-96 object-cover transform group-hover:scale-105 transition-transform duration-700"
+              loading="lazy"
+              decoding="async"
             />
             <div className="absolute inset-0 z-20 flex flex-col justify-center items-center text-white p-8 text-center">
               <Briefcase size={48} className="mb-4 text-brand-gold" />

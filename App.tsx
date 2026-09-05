@@ -21,48 +21,13 @@ import { NewsListPage } from './components/NewsListPage';
 import { ShopPage } from './components/ShopPage';
 import { PrivacyPolicyPage } from './components/PrivacyPolicyPage';
 import { useRoute, navigate, scrollToTarget } from './lib/router';
-import { titleFor, descriptionFor, keywordsFor, jsonLdFor } from './lib/seo';
+import { titleFor, descriptionFor, keywordsFor, jsonLdFor, canonicalFor, ogImageFor, isIndexable } from './lib/seo';
+import {
+  upsertMetaByName, upsertMetaByProperty, setCanonical, setRobots, setRouteJsonLd,
+} from './lib/pageMeta';
 
 // 管理画面（/admin）は遅延読み込み（公開バンドルには含めない）
 const AdminApp = lazy(() => import('./components/admin/AdminApp'));
-
-// <meta name="..."> を無ければ作成し、あれば更新する
-function upsertMetaByName(name: string, content: string) {
-  let el = document.head.querySelector<HTMLMetaElement>(`meta[name="${name}"]`);
-  if (!el) {
-    el = document.createElement('meta');
-    el.setAttribute('name', name);
-    document.head.appendChild(el);
-  }
-  el.setAttribute('content', content);
-}
-
-// <meta property="..."> (OGP用) を無ければ作成し、あれば更新する
-function upsertMetaByProperty(property: string, content: string) {
-  let el = document.head.querySelector<HTMLMetaElement>(`meta[property="${property}"]`);
-  if (!el) {
-    el = document.createElement('meta');
-    el.setAttribute('property', property);
-    document.head.appendChild(el);
-  }
-  el.setAttribute('content', content);
-}
-
-// ルート別の JSON-LD を <script id="route-jsonld"> に反映（空なら削除）
-function setRouteJsonLd(data: { '@graph': object[] }) {
-  const existing = document.getElementById('route-jsonld');
-  if (!data['@graph'].length) {
-    if (existing) existing.remove();
-    return;
-  }
-  const el = existing || document.createElement('script');
-  if (!existing) {
-    el.setAttribute('type', 'application/ld+json');
-    el.id = 'route-jsonld';
-    document.head.appendChild(el);
-  }
-  el.textContent = JSON.stringify(data);
-}
 
 function App() {
   const page = useRoute();
@@ -90,26 +55,31 @@ function App() {
     if (window.location.hash) scrollToTarget(window.location.hash);
   }, []);
 
-  // ルートが変わるたびに <title> / description / canonical / OGP / JSON-LD を更新（SEO）
+  // ルートが変わるたびに <title> / description / canonical / OGP / JSON-LD を更新（SEO）。
+  // 初期表示分は scripts/prerender.ts が静的HTMLへ埋め込み済みで、ここは SPA 遷移用。
+  // canonical は window.location ではなくルート定義から組み立てる（クエリ文字列を含めないため）。
   useEffect(() => {
     if (window.location.pathname.startsWith('/admin')) return; // 管理画面は対象外
     const title = titleFor(page);
     const description = descriptionFor(page);
-    const url = window.location.origin + window.location.pathname;
+    const url = canonicalFor(page);
+    const image = ogImageFor(page);
 
     document.title = title;
     upsertMetaByName('description', description);
     upsertMetaByName('keywords', keywordsFor(page));
+    setCanonical(url);
+    // 未知の店舗IDなどはここで noindex。お知らせ・コラムは CMS 取得後に各ページが判定する。
+    setRobots(isIndexable(page));
 
-    const canonical = document.querySelector('link[rel="canonical"]');
-    if (canonical) canonical.setAttribute('href', url);
-
-    // OGP / Twitter Card をページ内容に合わせて更新（画像はサイト共通の静的OG画像を使用）
     upsertMetaByProperty('og:url', url);
+    upsertMetaByProperty('og:type', page.type === 'news' || page.type === 'article' ? 'article' : 'website');
     upsertMetaByProperty('og:title', title);
     upsertMetaByProperty('og:description', description);
+    upsertMetaByProperty('og:image', image);
     upsertMetaByName('twitter:title', title);
     upsertMetaByName('twitter:description', description);
+    upsertMetaByName('twitter:image', image);
 
     setRouteJsonLd(jsonLdFor(page));
   }, [page]);
